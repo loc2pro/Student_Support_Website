@@ -1,0 +1,22 @@
+Post http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "mssv": "1800278",
+    "name":"Duc tinh",
+    "email":"ductinh@gmail.com",
+    "password": "plinh123"
+}
+
+###
+Post http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "mssv": "1800278",
+    "password": "plinh123"
+}
+
+### 
+GET http://localhost:5000/auth/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzNDkxMjAxMH0.EvxY3V4ggz4lOGcRp3gv2QdAtUqEE0mLXNJqXKFfdgs
