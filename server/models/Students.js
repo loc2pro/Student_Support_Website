@@ -3,6 +3,7 @@ module.exports = (sequelize, DataType) => {
         mssv: {
             type: DataType.STRING,
             allowNull: false,
+            unique: true,
         },
         name: {
             type: DataType.STRING,
