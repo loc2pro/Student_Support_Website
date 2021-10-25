@@ -208,7 +208,7 @@ img.large {
   margin-bottom: 0.5rem;
 }
 
-div > .title{
+div > .title {
   margin-left: 1rem;
 }
 /* alert */
@@ -301,6 +301,12 @@ div > .title{
 .table button {
   margin: 0 0.2rem;
 }
+.table tbody tr:hover {
+  background-color: yellow;
+}
+/* tr:hover {
+  background-color: yellow;
+} */
 /*Lich*/
 .lichhoc {
   height: 32rem;
@@ -308,8 +314,6 @@ div > .title{
   border-radius: 0.5rem;
   margin: 0.2rem;
 }
-
-
 
 /* Menu trang chu*/
 .featured {
@@ -321,7 +325,6 @@ div > .title{
   float: left;
   position: relative;
   margin: 1rem;
-  
 }
 .box-df {
   background-color: #fff;

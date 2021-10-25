@@ -18,7 +18,7 @@ module.exports = (sequelize, DataType) => {
             allowNull: false,
         },
         dateOfBirth: {
-            type: DataType.DATE,
+            type: DataType.STRING,
             allowNull: true,
         },
         address: {
@@ -30,6 +30,18 @@ module.exports = (sequelize, DataType) => {
             allowNull: true,
         },
     });
+
+    Students.associate = (models) => {
+        Students.hasMany(models.RegisteredCourses, {
+            onDelete: "cascade",
+        });
+        Students.hasMany(models.CompulsoryCourses, {
+            onDelete: "cascade",
+        });
+        Students.belongsTo(models.Majors, {
+            onDelete: "no action",
+        });
+    };
 
     return Students;
 };

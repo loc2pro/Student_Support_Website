@@ -5,13 +5,5 @@ module.exports = (sequelize, DataTypes) => {
             default: false,
         },
     });
-    CompulsoryCourses.associate = (models) => {
-        CompulsoryCourses.hasMany(models.Students, {
-            onDelete: "cascade",
-        });
-        CompulsoryCourses.hasMany(models.Courses, {
-            onDelete: "cascade",
-        });
-    };
     return CompulsoryCourses;
 };

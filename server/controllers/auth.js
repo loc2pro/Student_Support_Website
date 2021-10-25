@@ -1,7 +1,7 @@
 const env = "ACCESS_TOKEN_SECRET";
 const config = require(__dirname + "/../config/config.json")[env];
 const jwt = require("jsonwebtoken");
-const { Students } = require("../models");
+const { Students } = require("../models/Students");
 const bcrypt = require("bcrypt");
 
 const Login = async (req, res) => {
@@ -101,4 +101,3 @@ const CheckUser = async (req, res) => {
 };
 
 module.exports = { Login, Register, CheckUser };
-  

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import HomeScreen from "./Screens/HomeScreen";
-import { signout } from './actions/userActions';
+import { signout } from "./actions/userActions";
 import SigninScreen from "./Screens/SigninScreen";
+import CoursesScreen from "./Screens/CoursesScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -23,26 +24,32 @@ function App() {
               </Link>
             </div>
             <div>
-            {userInfo ? (
-              <div className="dropdown">  
-                <Link to="#">
-                  {userInfo.name} <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/profile">Profile</Link>
-                  </li>
-                  <Link to="/signout" onClick={signoutHandler}>
-                    Sign Out
+              <Link to="/courses" className="brand">
+                Danh Sách Môn Học
+              </Link>
+            </div>
+            <div>
+              {userInfo ? (
+                <div className="dropdown">
+                  <Link to="#">
+                    {userInfo.name} <i className="fa fa-caret-down"></i>
                   </Link>
-                </ul>
-              </div>
-            ) : (
-              <Link to="/signin">Signin</Link>
-            )}
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/profile">Profile</Link>
+                    </li>
+                    <Link to="/signout" onClick={signoutHandler}>
+                      Sign Out
+                    </Link>
+                  </ul>
+                </div>
+              ) : (
+                <Link to="/signin">Signin</Link>
+              )}
             </div>
           </header>
           <main>
+            <Route path="/courses" component={CoursesScreen}></Route>
             <Route path="/signin" component={SigninScreen}></Route>
             <Route path="/" component={HomeScreen} exact></Route>
           </main>
