@@ -20,3 +20,21 @@ Content-Type: application/json
 ### 
 GET http://localhost:5000/auth/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzNDkxMjAxMH0.EvxY3V4ggz4lOGcRp3gv2QdAtUqEE0mLXNJqXKFfdgs
+
+### Nhận vào studentId trả về thông tin khoa, nghành của student.
+GET http://localhost:5000/student/1
+
+###
+Post http://localhost:5000/course/create
+Content-Type: application/json
+
+{
+    "mahocphan": "CNTT1",
+    "tenhocphan":"Web",
+    "sotinchi":4,
+    "sotiet": 40
+}
+
+
+### Register Course
+GET http://localhost:5000/course/register/courseIds=1;2;3

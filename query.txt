@@ -1,0 +1,22 @@
+DROP TABLE `quanlysinhvien`.`compulsorycourses`;
+DROP TABLE `quanlysinhvien`.`registeredcourses`;
+DROP TABLE `quanlysinhvien`.`courses`;
+DROP TABLE `quanlysinhvien`.`students`;
+DROP TABLE `quanlysinhvien`.`sciences`;
+DROP TABLE `quanlysinhvien`.`majors`;
+
+INSERT INTO `quanlysinhvien`.`majors` (`manganh`, `tennganh`) VALUES ('KTPM', 'Kỹ Thuật Phần Mềm');
+INSERT INTO `quanlysinhvien`.`sciences` (`makhoa`, `tenkhoa`) VALUES ('CNTT', 'Công Nghệ Thông Tin');
+
+
+Thêm môn học
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH1', 'Nhập môn lập trình', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH2', 'Kỹ thuật lập trình', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH3', 'Hệ Điều Hành', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH4', 'Mạng máy tính', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH5', 'Cơ sở dữ liệu', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH6', 'Hệ quản trị dữ liệu', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH7', 'Lập trình ứng dụng', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH8', 'Phát triển cơ sở dữ liệu', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH9', 'Lập trình web', '4', '30');
+INSERT INTO `quanlysinhvien`.`courses` (`mahocphan`, `tenhocphan`, `sotinchi`, `sotiet`) VALUES ('MH10', 'lập trình mobile', '4', '30');
