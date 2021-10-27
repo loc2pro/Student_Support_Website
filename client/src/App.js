@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Link, Route } from "react-router-dom";
-import HomeScreen from "./Screens/HomeScreen";
+import { BrowserRouter, Link, Route, Redirect } from "react-router-dom";
 import { signout } from "./actions/userActions";
-import SigninScreen from "./Screens/SigninScreen";
+import CoursesDetailScreen from "./Screens/CoursesDetailScreen";
 import CoursesScreen from "./Screens/CoursesScreen";
+import HomeScreen from "./Screens/HomeScreen";
+import SigninScreen from "./Screens/SigninScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -23,16 +24,12 @@ function App() {
                 IUH Sinh Viên
               </Link>
             </div>
-            <div>
-              <Link to="/courses" className="brand">
-                Danh Sách Môn Học
-              </Link>
-            </div>
+
             <div>
               {userInfo ? (
                 <div className="dropdown">
                   <Link to="#">
-                    {userInfo.name} <i className="fa fa-caret-down"></i>
+                    {userInfo.user.name} <i className="fa fa-caret-down"></i>
                   </Link>
                   <ul className="dropdown-content">
                     <li>
@@ -49,8 +46,33 @@ function App() {
             </div>
           </header>
           <main>
-            <Route path="/courses" component={CoursesScreen}></Route>
+            <Route
+              exact
+              path="/courses"
+              // component={CoursesScreen}
+              render={() =>
+                userInfo ? (
+                  <Redirect to="/courses" />
+                ) : (
+                  <Redirect to="/signin" />
+                )
+              }
+            ></Route>
+            <Route
+              exact
+              path="/courses/:id"
+              // component={CoursesDetailScreen}
+              render={() =>
+                userInfo ? (
+                  <Redirect to="/courses/:id" />
+                ) : (
+                  <Redirect to="/signin" />
+                )
+              }
+            ></Route>
             <Route path="/signin" component={SigninScreen}></Route>
+            <Route path="/courses/:id" component={CoursesDetailScreen}></Route>
+            <Route path="/courses" component={CoursesScreen}></Route>
             <Route path="/" component={HomeScreen} exact></Route>
           </main>
           <footer className="row center">All right Coppy by LocDev</footer>

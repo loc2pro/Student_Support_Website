@@ -26,7 +26,20 @@ const getCourses = async(req, res) => {
         .then((courses) => {
             res.send(courses);
         })
-        .catch((err) => {});
+        .catch((err) => {
+            console.log({ err });
+        });
+};
+const getCoursesId = async(req, res) => {
+    const coursesId = req.params.coursesId;
+
+    await Courses.findOne({ where: { id: coursesId } })
+        .then((courses) => {
+            res.send(courses);
+        })
+        .catch((err) => {
+            console.log({ err });
+        });
 };
 
-module.exports = { createCourse, RegisteredCourse, getCourses };
+module.exports = { createCourse, RegisteredCourse, getCourses, getCoursesId };
