@@ -1,0 +1,21 @@
+//Tạo mới học kỳ học tập.
+Post http://localhost:5000/semester/create
+Content-Type: application/json
+
+{
+    "tenhocky":"HK3(2021-2022)",
+    "planstudyId":1
+}
+
+###Tạo mới học kỳ học tập.
+Post http://localhost:5000/semester/update
+Content-Type: application/json
+
+{
+    "id":2,
+    "tenhocky":"HK2(2021-2022)",
+    "planstudyId":1
+}
+
+### lấy môn học từ học kỳ
+get http://localhost:5000/semester/1

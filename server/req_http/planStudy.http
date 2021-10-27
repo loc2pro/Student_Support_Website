@@ -1,0 +1,11 @@
+//Tạo mới kế hoạch học tập.
+Post http://localhost:5000/planstudy/create
+Content-Type: application/json
+
+{
+    "tenkehoach":"Kế hoạch học tập khoa công nghệ thông tin",
+    "majorId":1
+}
+
+### Lấy kế hoạch học tập
+GET http://localhost:5000/planstudy/1

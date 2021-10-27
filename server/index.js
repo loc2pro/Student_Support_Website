@@ -4,8 +4,9 @@ const cors = require("cors");
 
 const authRouter = require("./routers/auth");
 const studentRouter = require("./routers/student");
-//const registeredCoursesRouter = require("./routers/RegisterCourses");
 const coursesRouter = require("./routers/courses");
+const planStudyRouter = require("./routers/PlanStudys");
+const semesterRouter = require("./routers/Semesters");
 
 const App = express();
 
@@ -14,8 +15,9 @@ App.use(cors());
 
 App.use("/auth", authRouter);
 App.use("/student", studentRouter);
-//App.use("/courses", registeredCoursesRouter);
 App.use("/course", coursesRouter);
+App.use("/planstudy", planStudyRouter);
+App.use("/semester", semesterRouter);
 
 const port = process.env.port || 5000;
 

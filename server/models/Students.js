@@ -25,20 +25,23 @@ module.exports = (sequelize, DataType) => {
             type: DataType.STRING,
             allowNull: true,
         },
-        course: {
+        image: {
             type: DataType.STRING,
             allowNull: true,
         },
     });
 
     Students.associate = (models) => {
-        Students.hasMany(models.RegisteredCourses, {
-            onDelete: "cascade",
-        });
-        Students.hasMany(models.CompulsoryCourses, {
-            onDelete: "cascade",
-        });
         Students.belongsTo(models.Majors, {
+            onDelete: "no action",
+        });
+        Students.belongsTo(models.PlanStudys, {
+            onDelete: "no action",
+        });
+        Students.hasMany(models.RegistersCourses, {
+            onDelete: "no action",
+        });
+        Students.hasMany(models.Learns, {
             onDelete: "no action",
         });
     };

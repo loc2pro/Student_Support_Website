@@ -1,12 +1,13 @@
 const { Courses } = require("../models");
 
 const createCourse = async(req, res) => {
-    const { mahocphan, tenhocphan, sotinchi, sotiet } = req.body;
+    const { mahocphan, tenhocphan, sotinchi, sotiet, semesterId } = req.body;
     await Courses.create({
             mahocphan: mahocphan,
             tenhocphan: tenhocphan,
             sotinchi: sotinchi,
             sotiet: sotiet,
+            SemesterId: semesterId,
         })
         .then((newcourse) => {
             res.json(newcourse);

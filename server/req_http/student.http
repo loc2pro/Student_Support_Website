@@ -1,0 +1,36 @@
+### Nhận vào mssv trả về thông tin khoa, nghành của student.
+GET http://localhost:5000/student/123
+
+### update newstudent
+Post http://localhost:5000/student/update
+Content-Type: application/json
+
+{
+    "mssv": "12345",
+    "name":"loc",
+    "email":"loc@gmail.com",
+    "dateOfBirth":"12/12/12",
+    "address":"Đức Chánh"
+}
+
+### add newstudent
+Post http://localhost:5000/student/create
+Content-Type: application/json
+
+{
+    "mssv": "123456",
+    "name":"ductinh",
+    "email":"ductinh@gmail.com",
+    "password":"123",
+    "dateOfBirth":"12/12/12",
+    "address":"Đức Chánh",
+    "MajorId":1
+}
+
+
+### forgot password student.
+GET http://localhost:5000/student/newpassword/123
+
+
+### delete student.
+GET http://localhost:5000/student/delete/123

@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         Majors.belongsTo(models.Sciences, {
             onDelete: "no action",
         });
+        Majors.hasMany(models.PlanStudys, {
+            onDelete: "no action",
+        });
     };
     return Majors;
 };
