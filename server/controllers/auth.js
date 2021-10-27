@@ -1,7 +1,7 @@
 const env = "ACCESS_TOKEN_SECRET";
 const config = require(__dirname + "/../config/config.json")[env];
 const jwt = require("jsonwebtoken");
-const { Students } = require("../models/Students");
+const { Students } = require("../models");
 const bcrypt = require("bcrypt");
 
 const Login = async (req, res) => {
@@ -31,12 +31,16 @@ const Login = async (req, res) => {
             });
           else {
             const accessToken = jwt.sign({ userId: user.id }, config);
-            return res.status(200).send({
-              mssv: user.mssv,
-              name: user.name,
-              email: user.email,
-              token: accessToken,
-            });
+            await user
+              .getMajor()
+              .then(async (marjor) => {
+                await marjor.getScience().then((sciences) => {
+                  res.json({ user, marjor, sciences, accessToken });
+                });
+              })
+              .catch((err) => {
+                res.json({ user });
+              });
           }
         })
         .catch((err) => {
@@ -82,7 +86,7 @@ const Register = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "Register in failer" });
+    res.json({ success: false, message: "Register in failer", error });
   }
 };
 
