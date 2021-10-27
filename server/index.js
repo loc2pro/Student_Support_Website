@@ -7,6 +7,7 @@ const studentRouter = require("./routers/student");
 const coursesRouter = require("./routers/courses");
 const planStudyRouter = require("./routers/PlanStudys");
 const semesterRouter = require("./routers/Semesters");
+const classCourseRouter = require("./routers/ClassCourses");
 
 const App = express();
 
@@ -18,6 +19,7 @@ App.use("/student", studentRouter);
 App.use("/course", coursesRouter);
 App.use("/planstudy", planStudyRouter);
 App.use("/semester", semesterRouter);
+App.use("/classcourse", classCourseRouter);
 
 const port = process.env.port || 5000;
 

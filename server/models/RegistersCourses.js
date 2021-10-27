@@ -8,15 +8,15 @@ module.exports = (sequelize, DataTypes) => {
 
     RegistersCourses.associate = (models) => {
         RegistersCourses.hasOne(models.Courses, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
     };
     RegistersCourses.associate = (models) => {
         RegistersCourses.belongsTo(models.Semesters, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
         RegistersCourses.hasOne(models.Learns, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
     };
 

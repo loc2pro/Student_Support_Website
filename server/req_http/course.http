@@ -3,10 +3,11 @@ Post http://localhost:5000/course/create
 Content-Type: application/json
 
 {
-    "mahocphan": "CNTT6",
-    "tenhocphan":"Quan Ly Du An",
+    "mahocphan": "CNTT1",
+    "tenhocphan":"Nhập môn Lập Trình",
     "sotinchi":3,
-    "sotiet": 45
+    "sotiet": 45,
+    "semesterId":1
 }
 
 

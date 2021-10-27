@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     PlanStudys.associate = (models) => {
         PlanStudys.hasMany(models.Semesters, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
     };
     return PlanStudys;

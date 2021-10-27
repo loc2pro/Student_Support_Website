@@ -19,3 +19,6 @@ Content-Type: application/json
 
 ### lấy môn học từ học kỳ
 get http://localhost:5000/semester/1
+
+### Xóa học kỳ
+get http://localhost:5000/semester/delete/1

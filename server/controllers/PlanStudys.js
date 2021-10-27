@@ -23,7 +23,6 @@ const getPlanStudy = async(req, res) => {
     console.log(id);
     await PlanStudys.findOne({ where: { id: id } })
         .then((planstudy) => {
-            console.log(planstudy);
             planstudy
                 .getSemesters()
                 .then((semessters) => {
@@ -38,4 +37,45 @@ const getPlanStudy = async(req, res) => {
         });
 };
 
-module.exports = { createPlanStudy, getPlanStudy };
+const updatePlanStudy = async(req, res) => {
+    const { tenkehoach, id } = req.body;
+    await PlanStudys.update({ tenkehoach: tenkehoach }, { where: { id: id } })
+        .then((result) => {
+            res.status(200).json({
+                success: true,
+                message: `Update PlanStudy ${tenkehoach} success`,
+                result,
+            });
+        })
+        .catch((err) => {
+            res
+                .status(400)
+                .json({ success: false, message: "update PlanStudy failer", err });
+        });
+};
+
+const deletePlanStudy = async(req, res) => {
+    const id = req.params.id;
+    await PlanStudys.destroy({ where: { id: id } })
+        .then((result) => {
+            res.status(200).json({
+                success: true,
+                message: "Delete PlanStudy success",
+                result,
+            });
+        })
+        .catch((err) => {
+            res.status(400).json({
+                success: false,
+                message: "Delete PlanStudy failer",
+                err: err,
+            });
+        });
+};
+
+module.exports = {
+    createPlanStudy,
+    getPlanStudy,
+    updatePlanStudy,
+    deletePlanStudy,
+};
