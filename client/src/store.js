@@ -4,6 +4,7 @@ import {
   coursesDetailsReducer,
   listCoursesReducer,
 } from "./Reducers/coursesReducers";
+import { listPlanstudyReducer} from "./Reducers/planstudyReducers";
 import { userSigninReducer } from "./Reducers/userReducers";
 const initialState = {
   userSignin: {
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   userSignin: userSigninReducer,
   coursesList: listCoursesReducer,
   coursesDetail: coursesDetailsReducer,
+  semesterList: listPlanstudyReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

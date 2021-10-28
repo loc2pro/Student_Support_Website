@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { listCourses } from "../actions/coursesActions";
 import LoadingBox from "../Components/LoadingBox";
@@ -8,6 +7,7 @@ import MessageBox from "../Components/MessageBox";
 
 export default function CoursesScreen(props) {
   const val = props;
+  const semesterId = props.match.params.id;
   const dispatch = useDispatch();
   const history = useHistory();
   const coursesList = useSelector((state) => state.coursesList);
@@ -15,17 +15,18 @@ export default function CoursesScreen(props) {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const semesterList = useSelector((state) => state.semesterList);
+  const { semester } = semesterList;
 
   useEffect(() => {
     if (userInfo) {
-      dispatch(listCourses());
+      dispatch(listCourses(semesterId));
     } else {
       return;
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo,semesterId]);
   const showCourses = (id) => () => {
     history.push(`/courses/${id}`);
-    // <Link to={`/course/${courses.id}`}></Link>;
   };
   return (
     <div>
@@ -45,7 +46,7 @@ export default function CoursesScreen(props) {
                 <th>Số Tiết</th>
               </tr>
             </thead>
-            {courses.map((val, key) => (
+            {courses.courses.map((val, key) => (
               <tbody>
                 <tr onClick={showCourses(val.id)}>
                   <td>{val.mahocphan} </td>

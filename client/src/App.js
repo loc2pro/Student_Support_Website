@@ -6,6 +6,7 @@ import CoursesDetailScreen from "./Screens/CoursesDetailScreen";
 import CoursesScreen from "./Screens/CoursesScreen";
 import HomeScreen from "./Screens/HomeScreen";
 import SigninScreen from "./Screens/SigninScreen";
+import SemesterScreen from "./Screens/SemesterScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -46,7 +47,7 @@ function App() {
             </div>
           </header>
           <main>
-            <Route
+            {/* <Route
               exact
               path="/courses"
               // component={CoursesScreen}
@@ -57,22 +58,23 @@ function App() {
                   <Redirect to="/signin" />
                 )
               }
-            ></Route>
+            ></Route> */}
             <Route
               exact
-              path="/courses/:id"
+              path="/semester/:id"
               // component={CoursesDetailScreen}
               render={() =>
                 userInfo ? (
-                  <Redirect to="/courses/:id" />
+                  <Redirect to="/semester/1" />
                 ) : (
                   <Redirect to="/signin" />
                 )
               }
             ></Route>
+            <Route path="/semester" component={SemesterScreen}></Route>
             <Route path="/signin" component={SigninScreen}></Route>
-            <Route path="/courses/:id" component={CoursesDetailScreen}></Route>
-            <Route path="/courses" component={CoursesScreen}></Route>
+            <Route path="/semester/:id" component={CoursesScreen}></Route>
+            {/* <Route path="/courses" component={CoursesScreen}></Route> */}
             <Route path="/" component={HomeScreen} exact></Route>
           </main>
           <footer className="row center">All right Coppy by LocDev</footer>

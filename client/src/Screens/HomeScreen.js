@@ -45,7 +45,7 @@ export default function HomeScreen() {
                   </div>
                   <div className="col-1">
                     <div class="lophoc">
-                      <h2>Lớp học: {userInfo.user.course}</h2>
+                      <h2>Ngày Sinh: {userInfo.user.dateOfBirth}</h2>
                     </div>
                     <div className="khoahoc">
                       <h2>Khoa: {userInfo.sciences.tenkhoa}</h2>
@@ -102,7 +102,7 @@ export default function HomeScreen() {
           </a>
         </div>
         <div className="featured-item">
-          <a href="/courses" title="Đăng ký học phần">
+          <a href="/semester" title="Đăng ký học phần">
             <div className="box-df">
               <div className="icon">
                 <img
