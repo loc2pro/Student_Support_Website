@@ -7,6 +7,16 @@ Content-Type: application/json
     "email":"loc@gmail.com",
     "password": "loc123"
 }
+###
+Post http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "mssv": "123456",
+    "name":"Nguyễn Loc",
+    "email":"loc@gmail.com",
+    "password": "loc123"
+}
 
 ###
 Post http://localhost:5000/auth/login
@@ -20,4 +30,5 @@ Content-Type: application/json
 ### 
 GET http://localhost:5000/auth/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzNDk3NTMxNX0.7eedTNijA489ZAwx6pX-ciCpgnkByuJtgjHkEPkG1q4
+
 

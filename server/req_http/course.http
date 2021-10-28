@@ -3,10 +3,11 @@ Post http://localhost:5000/course/create
 Content-Type: application/json
 
 {
-    "mahocphan": "CNTT6",
-    "tenhocphan":"Anh Văn 2",
+    "mahocphan": "CNTT1",
+    "tenhocphan":"Anh Văn 3",
     "sotinchi":3,
-    "sotiet": 45
+    "sotiet": 45,
+    "semesterId":1
 }
 
 
@@ -16,3 +17,10 @@ GET http://localhost:5000/course/register/courseIds=1;2;3
 
 ### getAll Course
 GET http://localhost:5000/course
+
+
+### get class Course
+GET http://localhost:5000/course/1
+
+### get 1 Course
+GET http://localhost:5000/course/get/1

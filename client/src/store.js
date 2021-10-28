@@ -1,10 +1,12 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import {
+  classDetailsReducer,
+  coursesClassReducer,
   coursesDetailsReducer,
   listCoursesReducer,
 } from "./Reducers/coursesReducers";
-import { listPlanstudyReducer} from "./Reducers/planstudyReducers";
+import { listPlanstudyReducer } from "./Reducers/planstudyReducers";
 import { userSigninReducer } from "./Reducers/userReducers";
 const initialState = {
   userSignin: {
@@ -18,6 +20,8 @@ const reducer = combineReducers({
   coursesList: listCoursesReducer,
   coursesDetail: coursesDetailsReducer,
   semesterList: listPlanstudyReducer,
+  coursesClass: coursesClassReducer,
+  classDetail: classDetailsReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

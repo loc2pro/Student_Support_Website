@@ -21,11 +21,13 @@ export default function SemesterScreen() {
     history.push(`/semester/${id}`);
   };
 
-
   const handleChange = (e) => {
-    alert(e.target.value);
-    history.push(`/semester/${e.target.value}`);
-
+    if (e.target.value == 0) {
+      history.push("/semester");
+    } else {
+      history.push(`/semester/${e.target.value}`);
+    }
+    // alert(e.target.value);
   };
   return (
     <div>
@@ -34,7 +36,8 @@ export default function SemesterScreen() {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <select  onChange={handleChange}>
+        <select onChange={handleChange}>
+          <option value="0">Chọn Học Kỳ</option>
           {semester.semessters.map((val, key) => (
             <option value={val.id}>{val.tenhocky}</option>
           ))}

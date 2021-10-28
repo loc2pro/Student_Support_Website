@@ -36,6 +36,25 @@ const updateSemester = async(req, res) => {
         });
 };
 
+const deleteSemester = async(req, res) => {
+    const id = req.params.id;
+    await Semesters.destroy({ where: { id: id } })
+        .then((result) => {
+            res.status(200).json({
+                success: true,
+                message: "Delete Semester success",
+                result,
+            });
+        })
+        .catch((err) => {
+            res.status(400).json({
+                success: false,
+                message: "Delete Semester failer",
+                err: err,
+            });
+        });
+};
+
 const getSemester = async(req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -55,4 +74,9 @@ const getSemester = async(req, res) => {
         });
 };
 
-module.exports = { createSemester, updateSemester, getSemester };
+module.exports = {
+    createSemester,
+    updateSemester,
+    getSemester,
+    deleteSemester,
+};

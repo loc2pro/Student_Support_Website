@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: "cascade",
         });
         Courses.belongsTo(model.RegistersCourses, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
     };
     return Courses;

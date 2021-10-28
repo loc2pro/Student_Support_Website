@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     });
     Majors.associate = (models) => {
         Majors.belongsTo(models.Sciences, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
         Majors.hasMany(models.PlanStudys, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
     };
     return Majors;

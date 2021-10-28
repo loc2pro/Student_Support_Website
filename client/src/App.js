@@ -74,7 +74,7 @@ function App() {
             <Route path="/semester" component={SemesterScreen}></Route>
             <Route path="/signin" component={SigninScreen}></Route>
             <Route path="/semester/:id" component={CoursesScreen}></Route>
-            {/* <Route path="/courses" component={CoursesScreen}></Route> */}
+            <Route path="/courses/:id" component={CoursesDetailScreen}></Route>
             <Route path="/" component={HomeScreen} exact></Route>
           </main>
           <footer className="row center">All right Coppy by LocDev</footer>

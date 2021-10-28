@@ -3,9 +3,9 @@ Post http://localhost:5000/planstudy/create
 Content-Type: application/json
 
 {
-    "tenkehoach":"Kế hoạch học tập khoa công nghệ thông tin",
-    "majorId":1
+    "tenkehoach":"Kế hoạch học tập khoa Kinh Tế",
+    "majorId":2
 }
 
 ### Lấy kế hoạch học tập
-GET http://localhost:5000/planstudy/1
+GET http://localhost:5000/planstudy/2

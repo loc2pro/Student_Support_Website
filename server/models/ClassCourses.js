@@ -1,23 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
     const ClassCourses = sequelize.define("ClassCourses", {
         malop: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         tenlop: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         trangthai: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         soluong: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         soluongDK: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
         },
@@ -31,4 +31,5 @@ module.exports = (sequelize, DataTypes) => {
         });
     };
     return ClassCourses;
+    
 };

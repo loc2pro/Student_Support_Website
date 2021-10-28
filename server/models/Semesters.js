@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
 
     Semesters.associate = (models) => {
         Semesters.belongsTo(models.PlanStudys, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
         Semesters.hasMany(models.Courses, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
     };
 

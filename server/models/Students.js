@@ -33,16 +33,16 @@ module.exports = (sequelize, DataType) => {
 
     Students.associate = (models) => {
         Students.belongsTo(models.Majors, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
         Students.belongsTo(models.PlanStudys, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
         Students.hasMany(models.RegistersCourses, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
         Students.hasMany(models.Learns, {
-            onDelete: "no action",
+            onDelete: "cascade",
         });
     };
 
