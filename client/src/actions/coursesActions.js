@@ -8,12 +8,15 @@ import {
   COURSES_LIST_SUCCESS,
 } from "../Contants/coursesConstants";
 
-export const listCourses = () => async (dispatch) => {
+export const listCourses = (semesterId) => async (dispatch) => {
   dispatch({
     type: COURSES_LIST_REQUEST,
+    payload: semesterId,
   });
   try {
-    const { data } = await Axios.get("http://localhost:5000/course");
+    const { data } = await Axios.get(
+      `http://localhost:5000/semester/${semesterId}`
+    );
     dispatch({ type: COURSES_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: COURSES_LIST_FAIL, payload: error.message });
