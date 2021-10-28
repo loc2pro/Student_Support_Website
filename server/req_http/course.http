@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "mahocphan": "CNTT6",
-    "tenhocphan":"Quan Ly Du An",
+    "tenhocphan":"Anh Văn 2",
     "sotinchi":3,
     "sotiet": 45
 }

@@ -1,0 +1,86 @@
+Post http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "mssv": "18090131",
+    "name":"Nguyễn Hữu Lộc",
+    "email":"loc@gmail.com",
+    "password": "loc123",
+    "address":"Đức Chánh",
+    "image":"https://topquangngai.vn/wp-content/uploads/2021/02/chup-anh-the-dep-quang-ngai-4.jpg",
+    "course":"DHKTPM14CTT"
+}
+
+###
+Post http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "mssv": "18090131",
+    "password": "1ug6f"
+}
+
+### 
+GET http://localhost:5000/auth/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzNDk3NTMxNX0.7eedTNijA489ZAwx6pX-ciCpgnkByuJtgjHkEPkG1q4
+### Nhận vào studentId trả về thông tin khoa, nghành của student.
+GET http://localhost:5000/student/1
+
+###
+Post http://localhost:5000/course/create
+Content-Type: application/json
+
+{
+    "mahocphan": "CNTT7",
+    "tenhocphan":"Anh Văn 2",
+    "sotinchi":2,
+    "sotiet": 30
+}
+
+
+### Register Course
+GET http://localhost:5000/course/register/courseIds=1;2;3
+
+
+### getAll Course
+GET http://localhost:5000/course
+
+### getAll Course
+GET http://localhost:5000/course/1
+
+### Nhận vào mssv trả về thông tin khoa, nghành của student.
+GET http://localhost:5000/student/123456
+
+### update newstudent
+Post http://localhost:5000/student/update
+Content-Type: application/json
+
+{
+    "mssv": "12345",
+    "name":"loc",
+    "email":"loc@gmail.com",
+    "dateOfBirth":"12/12/12",
+    "address":"Đức Chánh"
+}
+
+### add newstudent
+Post http://localhost:5000/student/create
+Content-Type: application/json
+
+{
+    "mssv": "123456",
+    "name":"ductinh",
+    "email":"ductinh@gmail.com",
+    "password":"123",
+    "dateOfBirth":"12/12/12",
+    "address":"Đức Chánh",
+    "MajorId":1
+}
+
+
+### forgot password student.
+GET http://localhost:5000/student/newpassword/18090131
+
+
+### delete student.
+GET http://localhost:5000/student/delete/123456

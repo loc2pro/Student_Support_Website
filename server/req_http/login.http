@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "mssv": "18090131",
-    "name":"loc",
+    "name":"Nguyễn Hữu Lộc",
     "email":"loc@gmail.com",
     "password": "loc123"
 }
