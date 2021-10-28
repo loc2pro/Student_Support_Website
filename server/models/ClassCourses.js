@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         ClassCourses.hasMany(model.ClassDetails, {
             onDelete: "cascade",
         });
+        ClassCourses.belongsTo(model.Teachers, {
+            onDelete: "cascade",
+        });
     };
     return ClassCourses;
 };

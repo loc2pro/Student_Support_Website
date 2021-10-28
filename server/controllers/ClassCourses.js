@@ -1,24 +1,25 @@
-const { ClassCourses } = require("../models");
+const { ClassCourses, Teachers } = require("../models");
 
 //output: classcourseId
 //Input: danh sách lịch của lớp học đó
 const getClassDetails = async(req, res) => {
     try {
         const classcourseId = req.params.classcourseId;
-        await ClassCourses.findByPk(classcourseId)
-            .then(async(classCourse) => {
+        await ClassCourses.findOne({ where: { id: classcourseId } })
+            .then(async(classcourse) => {
                 await classcourse
-                    .getTeacher()
-                    .then(async(teacher) => {
-                        await classcourse
-                            .getClassDetails()
-                            .then((result) => {
-                                res.status(200).json({ success: true, classcourse, teacher });
+                    .getClassDetails()
+                    .then(async(classdetais) => {
+                        await Teachers.findByPk(classcourse.TeacherId)
+                            .then((teacher) => {
+                                res
+                                    .status(200)
+                                    .json({ success: true, classcourse, teacher, classdetais });
                             })
                             .catch((err) => {
                                 res.status(400).json({
                                     success: false,
-                                    message: "Không tìn thấy lịch học",
+                                    message: "Không tìn thấy giáo viên của lớp",
                                     err,
                                 });
                             });
@@ -26,12 +27,13 @@ const getClassDetails = async(req, res) => {
                     .catch((err) => {
                         res.status(400).json({
                             success: false,
-                            message: "Không tìn thấy giáo viên của lớp",
+                            message: "Không tìn thấy lịch học",
                             err,
                         });
                     });
             })
             .catch((err) => {
+                console.log(err);
                 res
                     .status(400)
                     .json({ success: false, message: "Không tìn thấy lớp học", err });

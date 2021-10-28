@@ -1,0 +1,10 @@
+### Đăng ký môn học
+Post http://localhost:5000/student/create
+Content-Type: application/json
+
+{
+    "CourseId": 1,
+    "SemesterId":1,
+    "StudentId":1,
+    "ClassCourseId":1,
+}

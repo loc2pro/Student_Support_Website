@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         RegistersCourses.belongsTo(models.Semesters, {
             onDelete: "cascade",
         });
+        RegistersCourses.belongsTo(models.Courses, {
+            onDelete: "cascade",
+        });
         RegistersCourses.hasOne(models.Learns, {
             onDelete: "cascade",
         });
