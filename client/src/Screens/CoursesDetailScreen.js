@@ -16,9 +16,12 @@ export default function CoursesDetailScreen(props) {
 
   const coursesClass = useSelector((state) => state.coursesClass);
   const { lop } = coursesClass;
-
   const classDetail = useSelector((state) => state.classDetail);
   const { classdetail } = classDetail;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+  const semesterList = useSelector((state) => state.semesterList);
+  const { semester } = semesterList;
 
   useEffect(() => {
     dispatch(detailsCourses(coursesId));
@@ -34,6 +37,10 @@ export default function CoursesDetailScreen(props) {
 
   const getClassDetails = (id) => () => {
     dispatch(classDetails(id));
+  };
+  const RegisterHandler = () => {
+    // alert(classdetail.classcourse.id,userInfo.user.id,coursesId,);
+    // alert(semester.id);
   };
 
   return (
@@ -124,7 +131,10 @@ export default function CoursesDetailScreen(props) {
 
           <div className=" row center">
             <div>
-              <button className="primary"> Đăng Ký </button>
+              <button className="primary" onClick={RegisterHandler}>
+                {" "}
+                Đăng Ký{" "}
+              </button>
             </div>
           </div>
         </div>

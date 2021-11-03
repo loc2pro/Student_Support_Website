@@ -13,6 +13,7 @@ const createCourse = async(req, res) => {
             res.json(newcourse);
         })
         .catch((err) => {});
+        
 };
 
 const RegisteredCourse = async(req, res) => {

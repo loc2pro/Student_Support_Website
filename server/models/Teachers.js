@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
         magiaovien: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         tengiaovien: {
             type: DataTypes.STRING,
@@ -11,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING,
             allowNull: true,
+            unique: true,
         },
     });
     Teachers.associate = (models) => {

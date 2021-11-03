@@ -8,7 +8,6 @@ export default function HomeScreen() {
   const { userInfo, loading, error } = userSignin;
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     // dispatch(signin());
   }, [dispatch]);
@@ -65,7 +64,43 @@ export default function HomeScreen() {
         <div class="col-2">
           <div class="lichhoc">
             <div class="container">
-              <div id="calendar"></div>
+              <div class="box-df">
+                <div class="portlet">
+                  <div class="portlet-title">
+                    <div class="caption">
+                      <span class="caption-subject bold">
+                        <a href="">Kết quả học tập</a>
+                      </span>
+                    </div>
+                    <div class="actions">
+                      <select
+                        class="form-control"
+                        id="cboIDDotThongKeKQHT"
+                        name="cboIDDotThongKeKQHT"
+                        placeholder="Chọn học kỳ"
+                      >
+                        <option value="">Chọn học kỳ</option>
+                        <option value="41">HK2 (2021-2022)</option>
+                        <option selected="selected" value="40">
+                          HK1 (2021-2022)
+                        </option>
+                        <option value="39">HK3 (2020-2021)</option>
+                        <option value="38">HK2 (2020-2021)</option>
+                        <option value="37">HK1 (2020-2021)</option>
+                        <option value="36">HK3 (2019-2020)</option>
+                        <option value="35">HK2 (2019-2020)</option>
+                        <option value="34">HK1 (2019-2020)</option>
+                        <option value="18">HK3 (2018-2019)</option>
+                        <option value="14">HK2 (2018-2019)</option>
+                        <option value="13">HK1 (2018-2019)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="portlet-body">
+                    <div id="box-dashboard-thongke-ketquahoctap-theodot"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -76,7 +111,7 @@ export default function HomeScreen() {
 
       <div className="featured">
         <div className="featured-item">
-          <a href="/lich-theo-tuan.html" title="Lịch theo tuần">
+          <a href="/timetable" title="Lịch theo tuần">
             <div className="box-df">
               <div className="icon">
                 <img

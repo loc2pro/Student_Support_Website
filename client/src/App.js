@@ -7,6 +7,7 @@ import CoursesScreen from "./Screens/CoursesScreen";
 import HomeScreen from "./Screens/HomeScreen";
 import SigninScreen from "./Screens/SigninScreen";
 import SemesterScreen from "./Screens/SemesterScreen";
+import TimeTableScreen from "./Screens/TimeTableScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -59,7 +60,7 @@ function App() {
                 )
               }
             ></Route> */}
-            <Route
+            {/* <Route
               exact
               path="/semester/:id"
               // component={CoursesDetailScreen}
@@ -70,7 +71,8 @@ function App() {
                   <Redirect to="/signin" />
                 )
               }
-            ></Route>
+            ></Route> */}
+            <Route path="/timetable" component={TimeTableScreen}></Route>
             <Route path="/semester" component={SemesterScreen}></Route>
             <Route path="/signin" component={SigninScreen}></Route>
             <Route path="/semester/:id" component={CoursesScreen}></Route>

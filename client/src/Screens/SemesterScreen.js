@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listPlanstudy } from "../actions/planstudyActions";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
+import {
+  CLASS_COURSES_RESET,
+  CLASS_DETAILS_RESET,
+  COURSES_DETAILS_RESET,
+} from "../Contants/coursesConstants";
 
 export default function SemesterScreen() {
   const dispatch = useDispatch();
@@ -17,15 +22,19 @@ export default function SemesterScreen() {
     dispatch(listPlanstudy(userInfo.marjor.id));
   }, [dispatch]);
 
-  const showCourses = (id) => () => {
-    history.push(`/semester/${id}`);
-  };
+  // const showCourses = (id) => () => {
+  //   history.push(`/semester/${id}`);
+  // };
 
   const handleChange = (e) => {
     if (e.target.value == 0) {
       history.push("/semester");
     } else {
+      dispatch({ type: COURSES_DETAILS_RESET });
+      dispatch({ type: CLASS_COURSES_RESET });
+      dispatch({ type: CLASS_DETAILS_RESET });
       history.push(`/semester/${e.target.value}`);
+
     }
     // alert(e.target.value);
   };

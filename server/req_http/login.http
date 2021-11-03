@@ -2,7 +2,7 @@ Post http://localhost:5000/auth/register
 Content-Type: application/json
 
 {
-    "mssv": "18090131",
+    "mssv": "180901311",
     "name":"Nguyễn Hữu Lộc",
     "email":"loc@gmail.com",
     "password": "loc123"
@@ -28,7 +28,9 @@ Content-Type: application/json
 }
 
 ### 
-GET http://localhost:5000/auth/
+GET http://localhost:5000/auth/ 
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzNDk3NTMxNX0.7eedTNijA489ZAwx6pX-ciCpgnkByuJtgjHkEPkG1q4
+
+
 
 

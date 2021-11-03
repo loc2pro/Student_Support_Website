@@ -1,2 +1,2 @@
 ### Lấy Lớp Học
-GET http://localhost:5000/planstudy/2
+GET http://localhost:5000/classcourse/1

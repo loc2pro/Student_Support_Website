@@ -12,6 +12,9 @@ import {
   COURSES_LIST_FAIL,
   COURSES_LIST_REQUEST,
   COURSES_LIST_SUCCESS,
+  REGISTER_COURSES_FAIL,
+  REGISTER_COURSES_REQUEST,
+  REGISTER_COURSES_SUCCESS,
 } from "../Contants/coursesConstants";
 
 export const listCourses = (semesterId) => async (dispatch) => {
@@ -82,3 +85,29 @@ export const classDetails = (coursesId) => async (dispatch) => {
     });
   }
 };
+
+export const registerCourses =
+  (CourseId, SemesterId, StudentId, ClassCourseId) => async (dispatch) => {
+    dispatch({
+      type: REGISTER_COURSES_REQUEST,
+      payload: { CourseId, SemesterId, StudentId, ClassCourseId },
+    });
+    try {
+      const { data } = await Axios.post(
+        `http://localhost:5000/registercourse/dangkyhocphan`,
+        { CourseId, SemesterId, StudentId, ClassCourseId }
+      );
+      dispatch({
+        type: REGISTER_COURSES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: REGISTER_COURSES_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
