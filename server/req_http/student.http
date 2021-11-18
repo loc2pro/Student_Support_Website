@@ -1,15 +1,15 @@
 ### Nhận vào mssv trả về thông tin khoa, nghành của student.
-GET http://localhost:5000/student/123
+GET http://localhost:5000/student/18090131
 
 ### update newstudent
 Post http://localhost:5000/student/update
 Content-Type: application/json
 
 {
-    "mssv": "12345",
-    "name":"loc",
-    "email":"loc@gmail.com",
-    "dateOfBirth":"12/12/12",
+    "mssv": "18090131",
+    "name":"locc",
+    "email":"locdev2000@gmail.com",
+    "dateOfBirth":"12/12/2000",
     "address":"Đức Chánh"
 }
 
@@ -28,9 +28,22 @@ Content-Type: application/json
 }
 
 
+
+### get class details
+GET http://localhost:5000/student/getclasses/18090131
+
+
 ### forgot password student.
 GET http://localhost:5000/student/newpassword/123
 
 
 ### delete student.
 GET http://localhost:5000/student/delete/123
+
+### send
+Post http://localhost:5000/student/sendmail
+Content-Type: application/json
+
+{
+    "email":"locdev20000@gmail.com"
+}

@@ -4,25 +4,33 @@ import { useHistory } from "react-router-dom";
 import {
   classCoursess,
   classDetails,
+  classRegisterDetails,
+  deleteRegisterCourses,
   detailsCourses,
   listCourses,
   registerCourses,
 } from "../actions/coursesActions";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
+import Toast from "react-bootstrap/Toast";
 import {
   CLASS_COURSES_RESET,
   CLASS_DETAILS_RESET,
   COURSES_DETAILS_RESET,
+  DELETE_REGISTER_COURSES_RESET,
+  REGISTER_CLASS_DETAILS_RESET,
   REGISTER_COURSES_REQUEST,
   REGISTER_COURSES_RESET,
 } from "../Contants/coursesConstants";
+import { Col, Modal, Row, Table } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { listTimeTable } from "../actions/timeTableActions copy";
+import { TIMETABLE_RESET } from "../Contants/timeTableConstants";
 
 export default function CoursesScreen(props) {
   // const val = props;
   const SemesterId = props.match.params.id;
   const dispatch = useDispatch();
-  const history = useHistory();
   const coursesList = useSelector((state) => state.coursesList);
   const { loading, error, courses } = coursesList;
   const coursesDetail = useSelector((state) => state.coursesDetail);
@@ -35,54 +43,127 @@ export default function CoursesScreen(props) {
   const { userInfo } = userSignin;
   const semesterList = useSelector((state) => state.semesterList);
   const { semester } = semesterList;
+  const tableTime = useSelector((state) => state.tableTime);
+  const { timeTable } = tableTime;
+  const registerClassDetail = useSelector((state) => state.registerClassDetail);
+  const { chitietlop } = registerClassDetail;
+  const deleteRegister = useSelector((state) => state.deleteRegister);
+  const { success: deleteSuccess, action } = deleteRegister;
+  const mssv = userInfo.user.mssv;
 
   const coursesRegister = useSelector((state) => state.coursesRegister);
-  const { success, registerCoursess, loading: loadingAlert } = coursesRegister;
-
+  const {
+    success,
+    registerCoursess,
+    loading: loadingAlert,
+    error: errorAlert,
+  } = coursesRegister;
+  const [lichtrung, setLichtrung] = useState([]);
+  const [chitiet, setChitiet] = useState(null);
   const [CourseId, setCourseId] = useState();
   const [ClassCourseId, setClassCourseId] = useState();
+  const [modal, setmodal] = useState({
+    show: false,
+  });
+  const [modal1, setModal1] = useState({
+    show: false,
+  });
+
+  const handleCloseModal = (e) => {
+    e.preventDefault();
+    if (modal.show) {
+      setLichtrung([]);
+      setmodal({ show: false });
+    } else {
+      let lichtrung1 = [];
+      timeTable?.listCourses?.forEach((item) => {
+        item.ClassCourse.ClassDetails.forEach((detail) => {
+          classdetail?.classdetais?.forEach((item1) => {
+            if (item1.ca === detail.ca && item1.lichhoc === detail.lichhoc) {
+              lichtrung1.push({
+                tenhocphan: item.tenhocphan,
+                tenlop: item.ClassCourse.tenlop,
+                lichhoc: item1.lichhoc,
+                ca: item1.ca,
+              });
+            }
+          });
+        });
+      });
+      setLichtrung(lichtrung1);
+      setmodal({ show: true });
+    }
+  };
+  const handleCloseModal1 = (e) => {
+    e.preventDefault();
+    if (modal1.show) {
+      setModal1({ show: false });
+      dispatch({ type: REGISTER_CLASS_DETAILS_RESET });
+    } else {
+      setModal1({ show: true });
+    }
+  };
 
   useEffect(() => {
     if (userInfo) {
+      dispatch({ type: TIMETABLE_RESET });
       dispatch(listCourses(SemesterId));
+      dispatch(listTimeTable(userInfo.user.mssv));
     }
-  }, [dispatch, userInfo, SemesterId]);
-
-  useEffect(() => {});
+  }, [userInfo, SemesterId]);
   const showCourses = (coursesId) => () => {
+    setClassCourseId("");
     dispatch(detailsCourses(coursesId));
     dispatch(classCoursess(coursesId));
     setCourseId(coursesId);
+    dispatch({ type: CLASS_DETAILS_RESET });
   };
-  // const getIDCourses = (id) => () => {};
   const getClassDetails = (classDetailsId) => () => {
     dispatch(classDetails(classDetailsId));
     setClassCourseId(classDetailsId);
   };
+  const getChitiet = (chitietId) => () => {
+    dispatch(classRegisterDetails(chitietId));
+    setChitiet(chitietId);
+  };
   const RegisterHandler = (e) => {
     e.preventDefault();
-    dispatch(registerCourses(CourseId, SemesterId, StudentId, ClassCourseId));
-
-    // {
-    //   success ? alert("Đăng Ký Thành Công") : alert("Đăng Ký Thất Bại");
-    // }
-    // {
-    //   loadingAlert ? alert("Đăng Ký Thành Công") : alert("Đăng Ký Thất Bại");
-    //   dispatch({ type: REGISTER_COURSES_RESET });
-    // }
+    if (lop)
+      dispatch(registerCourses(CourseId, SemesterId, StudentId, ClassCourseId));
   };
+
+  //alert message
   if (registerCoursess) {
     {
-      success ? alert("Đăng Ký Thành Công") : alert("Đăng Ký Thất Bại");
+      success ? alert(registerCoursess.message) : alert(errorAlert);
       dispatch({ type: REGISTER_COURSES_RESET });
       dispatch({ type: COURSES_DETAILS_RESET });
       dispatch({ type: CLASS_COURSES_RESET });
       dispatch({ type: CLASS_DETAILS_RESET });
+      dispatch(listTimeTable(userInfo.user.mssv));
     }
   }
 
+  //Delete register courses
+  const deleteHandler = (chitietId) => () => {
+    console.log(chitietId);
+    dispatch(deleteRegisterCourses(chitietId, SemesterId, StudentId));
+  };
+  useEffect(() => {
+    if (action) {
+      deleteSuccess ? alert(action.message) : alert(action.message);
+      dispatch(listTimeTable(userInfo.user.mssv));
+      dispatch({ type: REGISTER_COURSES_RESET });
+      dispatch({ type: COURSES_DETAILS_RESET });
+      dispatch({ type: CLASS_COURSES_RESET });
+      dispatch({ type: CLASS_DETAILS_RESET });
+      dispatch({ type: DELETE_REGISTER_COURSES_RESET });
+    }
+  }, [action]);
+
   const StudentId = userInfo.user.id;
   // alert(idCourses);
+
   return (
     <div>
       {loading ? (
@@ -91,11 +172,17 @@ export default function CoursesScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <h2>id courses{CourseId}</h2>
-          <h2> id class{ClassCourseId}</h2>
-          <div className="row center">
-            <h1>Danh Sách Môn Học</h1>
-            <table className="table">
+          <Row>
+            <h3
+              style={{
+                textAlign: "center",
+                color: "#99253a",
+                fontWeight: "bold",
+              }}
+            >
+              Danh Sách Môn Học
+            </h3>
+            <Table bordered responsive="lg">
               <thead>
                 <tr>
                   <th>Mã Học Phần</th>
@@ -104,80 +191,116 @@ export default function CoursesScreen(props) {
                   <th>Số Tiết</th>
                 </tr>
               </thead>
-              {courses.courses.map((val, key) => (
-                <tbody>
+              <tbody>
+                {courses.courses.map((val, key) => (
                   <tr onClick={showCourses(val.id)}>
-                    <td>{val.mahocphan} </td>
+                    <td>{val.mahocphan}</td>
                     <td>{val.tenhocphan}</td>
                     <td>{val.sotinchi}</td>
                     <td>{val.sotiet}</td>
                   </tr>
-                </tbody>
-              ))}
-            </table>
-          </div>
-          <div className="row">
-            <div className="col-1">
-              <div className="row center ">
-                <h1>Thông Tin Môn Học</h1>
-                <table className="table thongtin ">
-                  <thead>
-                    <tr>
-                      <th>Mã Học Phần</th>
-                      <th>Tên Học Phần</th>
-                      <th>Số Tín Chỉ</th>
-                      <th>Số Tiết</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {course && (
-                      <tr>
-                        <td>{course.mahocphan}</td>
-                        <td>{course.tenhocphan}</td>
-                        <td>{course.sotinchi}</td>
-                        <td>{course.sotiet}</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="col-1">
-              {lop && (
-                <div className="row center">
-                  <h1>Danh Sách Lớp Học</h1>
-                  <table className="table danhsach">
+                ))}
+              </tbody>
+            </Table>
+          </Row>
+          {course && (
+            <Row>
+              <Col xs={6} sm={6} md={6} lg={6}>
+                <Row>
+                  <h3
+                    style={{
+                      textAlign: "center",
+                      color: "#99253a",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Thông Tin Môn Học
+                  </h3>
+                  <Table bordered responsive="lg">
                     <thead>
                       <tr>
-                        <th>Mã Lớp Học</th>
-                        <th>Tên Lớp Học</th>
-                        <th>Số Lượng</th>
-                        <th>Trạng Thái</th>
+                        <th>Mã Học Phần</th>
+                        <th>Tên Học Phần</th>
+                        <th>Số Tín Chỉ</th>
+                        <th>Số Tiết</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {lop.classcourses &&
-                        lop.classcourses.map((val) => (
-                          <tr onClick={getClassDetails(val.id)}>
-                            <td>{val.malop}</td>
-                            <td>{val.tenlop}</td>
-                            <td>
-                              {val.soluongDK}/{val.soluong}
-                            </td>
-                            <td>{val.trangthai}</td>
-                          </tr>
-                        ))}
+                      {course && (
+                        <tr>
+                          <td>{course.mahocphan}</td>
+                          <td>{course.tenhocphan}</td>
+                          <td>{course.sotinchi}</td>
+                          <td>{course.sotiet}</td>
+                        </tr>
+                      )}
                     </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          </div>
+                  </Table>
+                </Row>
+              </Col>
+              <Col xs={6} sm={6} md={6} lg={6}>
+                {lop && (
+                  <div className="row center">
+                    <h3
+                      style={{
+                        textAlign: "center",
+                        color: "#99253a",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Danh Sách Lớp Học
+                    </h3>
+                    <Table bordered responsive="lg">
+                      <thead>
+                        <tr>
+                          <th>Mã Lớp Học</th>
+                          <th>Tên Lớp Học</th>
+                          <th>Số Lượng</th>
+                          <th>Trạng Thái</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {lop.classcourses &&
+                          lop.classcourses.map((val) => (
+                            <tr onClick={getClassDetails(val.id)}>
+                              <td>{val.malop}</td>
+                              <td>{val.tenlop}</td>
+                              <td>
+                                {val.soluongDK}/{val.soluong}
+                              </td>
+                              <td>
+                                <span
+                                  style={
+                                    val.trangthai === "Mở"
+                                      ? { color: "green" }
+                                      : { color: "red" }
+                                  }
+                                >
+                                  {val.trangthai}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </Table>
+                  </div>
+                )}
+              </Col>
+            </Row>
+          )}
 
           {classdetail && (
             <div className="row center">
-              <h1>Chi Tiết Lớp Học</h1>
-              <table className="table">
+              <h3
+                style={{
+                  textAlign: "center",
+                  color: "#99253a",
+                  fontWeight: "bold",
+                }}
+              >
+                Chi Tiết Lớp Học
+              </h3>
+              <Table bordered responsive="lg">
                 <thead>
                   <tr>
                     <th>Tên Giáo Viên</th>
@@ -201,16 +324,179 @@ export default function CoursesScreen(props) {
                       </tr>
                     ))}
                 </tbody>
-              </table>
+              </Table>
+              <Row>
+                <div className="mb-2">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    onClick={handleCloseModal}
+                  >
+                    Kiểm Tra Trùng Lịch
+                  </Button>
+                </div>
+              </Row>
             </div>
           )}
+          {classdetail && (
+            <Row>
+              <div className="mb-2" style={{ textAlign: "center" }}>
+                <Button variant="warning" size="lg" onClick={RegisterHandler}>
+                  Đăng Ký
+                </Button>
+              </div>
+            </Row>
+          )}
+          <Row>
+            <h3
+              style={{
+                textAlign: "center",
+                color: "#99253a",
+                fontWeight: "bold",
+                marginTop: "2rem",
+              }}
+            >
+              Lớp học phần đã đăng ký trong học kỳ này
+            </h3>
+            <Table bordered responsive="lg">
+              <thead>
+                <tr>
+                  <th>Mã Học Phần</th>
+                  <th>Tên Lớp Học Phần</th>
+                  <th>Số Tín Chỉ</th>
+                  <th>Học Phí</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {timeTable?.listCourses &&
+                  timeTable.listCourses.map((val, key) => (
+                    <tr onClick={getChitiet(val.ClassCourse.id)}>
+                      <td>{val.mahocphan}</td>
+                      <td>{val.tenhocphan}</td>
+                      <td>{val.sotinchi}</td>
+                      <td>
+                        {(val.sotinchi * 790000).toLocaleString("it-IT", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
+                      </td>
 
-          <div className=" row center">
-            <div>
-              <button className="primary" onClick={RegisterHandler}>
-                Đăng Ký
-              </button>
-            </div>
+                      <td>
+                        <Button
+                          variant="outline-info"
+                          onClick={handleCloseModal1}
+                        >
+                          Xem
+                        </Button>
+                        <Button
+                          variant="outline-info"
+                          onClick={deleteHandler(val.id)}
+                        >
+                          Hủy
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </Row>
+          <div
+            style={modal.show ? { display: "block" } : { display: "none" }}
+            class="modal"
+          >
+            <Modal
+              show={modal.show}
+              dialogClassName="modal-90w"
+              size="lg"
+              aria-labelledby="example-custom-modal-styling-title"
+            >
+              <Modal.Header closeButton onClick={handleCloseModal}>
+                <Modal.Title>Kiểm Tra Lịch Trùng</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Row>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>Tên Học Phần</th>
+                        <th>Tên Lớp</th>
+                        <th>Thứ</th>
+                        <th>Ca</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {lichtrung.map((item) => {
+                        return (
+                          <tr>
+                            <td>{item.tenhocphan}</td>
+                            <td>{item.tenlop}</td>
+                            <td>{item.lichhoc}</td>
+                            <td>{item.ca}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
+                </Row>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseModal}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
+
+          <div
+            style={modal1.show ? { display: "block" } : { display: "none" }}
+            class="modal"
+          >
+            <Modal
+              show={modal1.show}
+              dialogClassName="modal-90w"
+              size="lg"
+              aria-labelledby="example-custom-modal-styling-title"
+            >
+              <Modal.Header closeButton onClick={handleCloseModal1}>
+                <Modal.Title>Chi Tiết Lớp Học Đã Đăng Ký</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Row>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>Tên Lớp</th>
+                        <th>Thứ</th>
+                        <th>Ca</th>
+                        <th>Giáo Viên</th>
+                        <th>Cở Sở</th>
+                        <th>Phòng</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {chitietlop?.classdetais?.map((item) => {
+                        return (
+                          <tr>
+                            <td>{chitietlop.classcourse.tenlop}</td>
+                            <td>{item.lichhoc}</td>
+                            <td>{item.ca}</td>
+                            <td>{chitietlop.teacher.tengiaovien}</td>
+                            <td>{item.coso}</td>
+                            <td>{item.phong}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
+                </Row>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseModal1}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       )}

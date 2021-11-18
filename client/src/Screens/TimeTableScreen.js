@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import { Button, Col } from "react-bootstrap";
+import React, { useEffect, useRef } from "react";
+import { Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { listTimeTable } from "../actions/timeTableActions";
+import { listTimeTable } from "../actions/timeTableActions copy";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
-
+import { useReactToPrint } from "react-to-print";
 export default function TimeTableScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const tableTime = useSelector((state) => state.tableTime);
@@ -217,251 +223,272 @@ export default function TimeTableScreen() {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div className="row center">
-          <h1>Lịch Học</h1>
-          <table className="table lichhoc">
-            <tr>
-              <th>Ca</th>
-              <th>Thứ 2</th>
-              <th>Thứ 3</th>
-              <th>Thứ 4</th>
-              <th>Thứ 5</th>
-              <th>Thứ 6</th>
-              <th>Thứ 7</th>
-              <th>Chủ Nhật</th>
-            </tr>
-            <tr>
-              <td>Sáng</td>
-              <td>
-                {thu2sang.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu3sang.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu4sang.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu5sang.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu6sang.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu7sang.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thucnsang.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-            </tr>
-            <tr>
-              <td>Chiều</td>
-              <td>
-                {thu2chieu.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu3chieu.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu4chieu.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu5chieu.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu6chieu.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thu7chieu.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-              <td>
-                {thucnchieu.map((item) => {
-                  return (
-                    <div>
-                      <h3>{item.tenhocphan}</h3>
-                      {item.tenlop}-{item.mahocphan}
-                      <br />
-                      Tiết: {item.ca}
-                      <br />
-                      Phòng: {item.phong}
-                      <br />
-                      Giáo viên: {item.teacher}
-                    </div>
-                  );
-                })}
-              </td>
-            </tr>
-          </table>
-        </div>
+        <Row ref={componentRef}>
+          <h2
+            style={{
+              textAlign: "center",
+              color: "#99253a",
+              fontWeight: "bold",
+            }}
+          >
+            Lịch học, lịch thi theo tuần
+          </h2>
+          <Table bordered responsive="lg" className="lichhoc">
+            <thead>
+              <tr>
+                <th>Ca</th>
+                <th>Thứ 2</th>
+                <th>Thứ 3</th>
+                <th>Thứ 4</th>
+                <th>Thứ 5</th>
+                <th>Thứ 6</th>
+                <th>Thứ 7</th>
+                <th>Chủ Nhật</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sáng</td>
+                <td>
+                  {thu2sang.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu3sang.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu4sang.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu5sang.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu6sang.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu7sang.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thucnsang.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+              </tr>
+              <tr>
+                <td>Chiều</td>
+                <td>
+                  {thu2chieu.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu3chieu.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu4chieu.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu5chieu.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu6chieu.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thu7chieu.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+                <td>
+                  {thucnchieu.map((item) => {
+                    return (
+                      <div>
+                        <h5 style={{ color: "red" }}>{item.tenhocphan}</h5>
+                        {item.tenlop}-{item.mahocphan}
+                        <br />
+                        Tiết: {item.ca}
+                        <br />
+                        Phòng: {item.phong}
+                        <br />
+                        Giáo viên: {item.teacher}
+                      </div>
+                    );
+                  })}
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+          <Row style={{ textAlign: "center" }}>
+            <Col></Col>
+            <Col>
+              <Button variant="danger" onClick={handlePrint}>
+                In Lịch Học
+              </Button>
+            </Col>
+            <Col></Col>
+          </Row>
+        </Row>
       )}
     </div>
   );

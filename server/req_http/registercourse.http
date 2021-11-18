@@ -9,3 +9,25 @@ Content-Type: application/json
     "ClassCourseId":1
 }
 
+### Lấy Công Nợ
+Post http://localhost:5000/registercourse/getRegisterCourses
+Content-Type: application/json
+
+{
+    "SemesterId":1,
+    "StudentId":1
+}
+
+### Thanh Toán Cập Nhật Trạng Thái
+Post http://localhost:5000/registercourse/donghocphi
+Content-Type: application/json
+
+{
+    "SemesterId":1,
+    "StudentId":1
+}
+
+### Xóa Môn Đã Đăng Ký
+Get http://localhost:5000/registercourse/delete/2
+
+

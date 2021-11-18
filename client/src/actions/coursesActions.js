@@ -12,6 +12,12 @@ import {
   COURSES_LIST_FAIL,
   COURSES_LIST_REQUEST,
   COURSES_LIST_SUCCESS,
+  DELETE_REGISTER_COURSES_FAIL,
+  DELETE_REGISTER_COURSES_REQUEST,
+  DELETE_REGISTER_COURSES_SUCCESS,
+  REGISTER_CLASS_DETAILS_FAIL,
+  REGISTER_CLASS_DETAILS_REQUEST,
+  REGISTER_CLASS_DETAILS_SUCCESS,
   REGISTER_COURSES_FAIL,
   REGISTER_COURSES_REQUEST,
   REGISTER_COURSES_SUCCESS,
@@ -86,6 +92,24 @@ export const classDetails = (coursesId) => async (dispatch) => {
   }
 };
 
+export const classRegisterDetails = (coursesId) => async (dispatch) => {
+  dispatch({ type: REGISTER_CLASS_DETAILS_REQUEST, payload: coursesId });
+  try {
+    const { data } = await Axios.get(
+      `http://localhost:5000/classcourse/${coursesId}`
+    );
+    dispatch({ type: REGISTER_CLASS_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: REGISTER_CLASS_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const registerCourses =
   (CourseId, SemesterId, StudentId, ClassCourseId) => async (dispatch) => {
     dispatch({
@@ -104,6 +128,32 @@ export const registerCourses =
     } catch (error) {
       dispatch({
         type: REGISTER_COURSES_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const deleteRegisterCourses =
+  (CourseId, SemesterId, StudentId) => async (dispatch) => {
+    dispatch({
+      type: DELETE_REGISTER_COURSES_REQUEST,
+      payload: { CourseId, SemesterId, StudentId },
+    });
+    try {
+      const { data } = await Axios.post(
+        `http://localhost:5000/registercourse/delete`,
+        { CourseId, SemesterId, StudentId }
+      );
+      dispatch({
+        type: DELETE_REGISTER_COURSES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_REGISTER_COURSES_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

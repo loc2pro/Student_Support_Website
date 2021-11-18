@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Router, useHistory } from "react-router";
 import { BrowserRouter, Link, Route, Redirect } from "react-router-dom";
 import { signout } from "./actions/userActions";
 import CoursesDetailScreen from "./Screens/CoursesDetailScreen";
@@ -8,79 +9,57 @@ import HomeScreen from "./Screens/HomeScreen";
 import SigninScreen from "./Screens/SigninScreen";
 import SemesterScreen from "./Screens/SemesterScreen";
 import TimeTableScreen from "./Screens/TimeTableScreen";
+import DetbScreen from "./Screens/DetbScreen";
+import NavbarMenu from "./Components/layout/NavbarMenu";
+import Footer from "./Components/layout/Footer";
+import { Col, Container, Row } from "react-bootstrap";
+import PayScreen from "./Screens/PayScreen";
+import ProfileScreen from "./Screens/ProfileScreen";
+import LearnResultScreen from "./Screens/LearnResultScreen";
+import Navbar from "./Components/layout/SideBar/Navbar";
+import ForgotPasswordScreen from "./Screens/ForgotPasswordScreen";
+import Calendarr from "./Screens/Calendar";
+import ProgressLearnScreen from "./Screens/ProgressLearnScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const history = useHistory();
   const dispatch = useDispatch();
   const signoutHandler = () => {
     dispatch(signout());
   };
+
   return (
     <div className="App">
       <BrowserRouter>
-        <div className="grid-container">
-          <header className="row">
-            <div>
-              <Link to="/" className="brand">
-                IUH Sinh Viên
-              </Link>
-            </div>
+        <NavbarMenu></NavbarMenu>
+        <Navbar />
+        <Container>
+          <Route
+            path="/forgotpassword"
+            component={ForgotPasswordScreen}
+          ></Route>
+          <Route path="/" component={HomeScreen} exact></Route>
+          {/* {userInfo ? (
+            <> */}
+          <Route path="/progresslearn" component={ProgressLearnScreen}></Route>
+          <Route path="/learnresult" component={LearnResultScreen}></Route>
+          <Route path="/profile" component={ProfileScreen}></Route>
+          <Route path="/pay" component={PayScreen}></Route>
+          <Route path="/detb" component={DetbScreen}></Route>
+          <Route path="/timetable" component={TimeTableScreen}></Route>
+          <Route path="/semester" component={SemesterScreen}></Route>
+          <Route path="/semester/:id" component={CoursesScreen}></Route>
+          <Route path="/courses/:id" component={CoursesDetailScreen}></Route>
+          {/* </>
+          ) : (
+            <Redirect to="/login" />
+          )} */}
 
-            <div>
-              {userInfo ? (
-                <div className="dropdown">
-                  <Link to="#">
-                    {userInfo.user.name} <i className="fa fa-caret-down"></i>
-                  </Link>
-                  <ul className="dropdown-content">
-                    <li>
-                      <Link to="/profile">Profile</Link>
-                    </li>
-                    <Link to="/signout" onClick={signoutHandler}>
-                      Sign Out
-                    </Link>
-                  </ul>
-                </div>
-              ) : (
-                <Link to="/signin">Signin</Link>
-              )}
-            </div>
-          </header>
-          <main>
-            {/* <Route
-              exact
-              path="/courses"
-              // component={CoursesScreen}
-              render={() =>
-                userInfo ? (
-                  <Redirect to="/courses" />
-                ) : (
-                  <Redirect to="/signin" />
-                )
-              }
-            ></Route> */}
-            {/* <Route
-              exact
-              path="/semester/:id"
-              // component={CoursesDetailScreen}
-              render={() =>
-                userInfo ? (
-                  <Redirect to="/semester/1" />
-                ) : (
-                  <Redirect to="/signin" />
-                )
-              }
-            ></Route> */}
-            <Route path="/timetable" component={TimeTableScreen}></Route>
-            <Route path="/semester" component={SemesterScreen}></Route>
-            <Route path="/signin" component={SigninScreen}></Route>
-            <Route path="/semester/:id" component={CoursesScreen}></Route>
-            <Route path="/courses/:id" component={CoursesDetailScreen}></Route>
-            <Route path="/" component={HomeScreen} exact></Route>
-          </main>
-          <footer className="row center">All right Coppy by LocDev</footer>
-        </div>
+          <Route path="/login" component={SigninScreen}></Route>
+        </Container>
+        <Footer></Footer>
       </BrowserRouter>
     </div>
   );

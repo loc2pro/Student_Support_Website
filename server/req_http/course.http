@@ -24,3 +24,7 @@ GET http://localhost:5000/course/1
 
 ### get 1 Course
 GET http://localhost:5000/course/get/1
+
+
+### get 1 Course
+GET http://localhost:5000/paypal

@@ -4,12 +4,23 @@ import {
   classDetailsReducer,
   coursesClassReducer,
   coursesDetailsReducer,
+  deleteRegisterCoursesReducer,
   listCoursesReducer,
+  registerClassDetailsReducer,
   registerCoursesReducer,
 } from "./Reducers/coursesReducers";
-import { timeTableReducer } from "./Reducers/timeTableReducer";
+import { detbReducer } from "./Reducers/detbReducer";
 import { listPlanstudyReducer } from "./Reducers/planstudyReducers";
-import { userSigninReducer } from "./Reducers/userReducers";
+import { timeTableReducer } from "./Reducers/timeTableReducer";
+import {
+  forgotPasswordReducer,
+  userDetailsReducer,
+  userSigninReducer,
+  userUpdateProfileReducer,
+} from "./Reducers/userReducers";
+import { payReducer } from "./Reducers/payReducer";
+import { resultReducer } from "./Reducers/resultReducer";
+import { progressLearnReducer } from "./Reducers/progressLearnReducer";
 const initialState = {
   userSignin: {
     userInfo: localStorage.getItem("userInfo")
@@ -24,8 +35,17 @@ const reducer = combineReducers({
   semesterList: listPlanstudyReducer,
   coursesClass: coursesClassReducer,
   classDetail: classDetailsReducer,
+  registerClassDetail: registerClassDetailsReducer,
   coursesRegister: registerCoursesReducer,
   tableTime: timeTableReducer,
+  detb: detbReducer,
+  pay: payReducer,
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
+  deleteRegister: deleteRegisterCoursesReducer,
+  resultList: resultReducer,
+  forgotpassword: forgotPasswordReducer,
+  progresslearn: progressLearnReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

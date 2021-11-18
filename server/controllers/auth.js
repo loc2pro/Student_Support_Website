@@ -27,24 +27,23 @@ const Login = async (req, res) => {
           if (!result)
             return res.status(404).json({
               success: false,
-              message: "Incorrect mssv or password",
+              message: "Sai Mssv Hoặc Password",
             });
           else {
             const accessToken = jwt.sign({ userId: user.id }, config);
             // await Students.findOne({ where: { mssv: mssv } })
             //   .then(async (user) => {
             //     console.log("student tim được:", student);
-                await user
-                  .getMajor()
-                  .then(async (marjor) => {
-                    await marjor.getScience().then((sciences) => {
-                      res.json({ user, marjor, sciences, accessToken });
-                    });
-                  })
-                  .catch((err) => {
-                    res.json({ err });
-                  });
-           
+            await user
+              .getMajor()
+              .then(async (marjor) => {
+                await marjor.getScience().then((sciences) => {
+                  res.json({ user, marjor, sciences, accessToken });
+                });
+              })
+              .catch((err) => {
+                res.json({ err });
+              });
           }
         })
         .catch((err) => {

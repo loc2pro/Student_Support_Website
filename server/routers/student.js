@@ -6,6 +6,8 @@ const {
   forgotPassword,
   deleteStudent,
   getClasses,
+  getStudent,
+  sendEmail,
 } = require("../controllers/Students");
 const router = express.Router();
 
@@ -15,5 +17,7 @@ router.post("/update", updateStudent);
 router.get("/newpassword/:mssv", forgotPassword);
 router.get("/delete/:mssv", deleteStudent);
 router.get("/getclasses/:mssv", getClasses);
+router.get("/profile/:mssv", getStudent);
+router.post("/sendmail", sendEmail);
 
 module.exports = router;

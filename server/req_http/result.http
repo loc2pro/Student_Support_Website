@@ -1,0 +1,20 @@
+Post http://localhost:5000/learn/getLearnsbySemesters
+Content-Type: application/json
+
+{
+    "SemesterId":1,
+    "StudentId":1
+}
+
+###
+Post http://localhost:5000/learn/update
+Content-Type: application/json
+
+{
+    "diemquatrinh1":10,
+    "diemquatrinh2":6,
+    "diemquatrinh3":7,
+    "diemgiuaky":2,
+    "diemcuoiky":3,
+    "id": 2
+}

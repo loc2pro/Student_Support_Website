@@ -19,6 +19,14 @@ import {
   REGISTER_COURSES_REQUEST,
   REGISTER_COURSES_SUCCESS,
   REGISTER_COURSES_RESET,
+  REGISTER_CLASS_DETAILS_REQUEST,
+  REGISTER_CLASS_DETAILS_SUCCESS,
+  REGISTER_CLASS_DETAILS_FAIL,
+  REGISTER_CLASS_DETAILS_RESET,
+  DELETE_REGISTER_COURSES_REQUEST,
+  DELETE_REGISTER_COURSES_SUCCESS,
+  DELETE_REGISTER_COURSES_FAIL,
+  DELETE_REGISTER_COURSES_RESET,
 } from "../Contants/coursesConstants";
 
 export const listCoursesReducer = (
@@ -111,6 +119,42 @@ export const registerCoursesReducer = (state = { loading: true }, action) => {
         error: action.payload,
       };
     case REGISTER_COURSES_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const registerClassDetailsReducer = (
+  state = { loading: true, chitietlop: [] },
+  action
+) => {
+  switch (action.type) {
+    case REGISTER_CLASS_DETAILS_REQUEST:
+      return { loading: true };
+    case REGISTER_CLASS_DETAILS_SUCCESS:
+      return { loading: false, chitietlop: action.payload };
+    case REGISTER_CLASS_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    case REGISTER_CLASS_DETAILS_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const deleteRegisterCoursesReducer = (
+  state = { loading: true },
+  action
+) => {
+  switch (action.type) {
+    case DELETE_REGISTER_COURSES_REQUEST:
+      return { loading: true, success: true };
+    case DELETE_REGISTER_COURSES_SUCCESS:
+      return { loading: false, success: true, action: action.payload };
+    case DELETE_REGISTER_COURSES_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case DELETE_REGISTER_COURSES_RESET:
       return {};
     default:
       return state;
