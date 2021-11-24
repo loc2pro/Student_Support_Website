@@ -184,6 +184,10 @@ img.small {
 img.medium {
   max-width: 8rem;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
 }
 img.large {
   width: 100%;

@@ -11,11 +11,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   RegistersCourses.associate = (models) => {
-    RegistersCourses.hasOne(models.Courses, {
-      onDelete: "cascade",
-    });
-  };
-  RegistersCourses.associate = (models) => {
     RegistersCourses.belongsTo(models.Semesters, {
       onDelete: "cascade",
     });

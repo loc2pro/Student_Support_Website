@@ -10,5 +10,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     });
+    Sciences.associate = (models) => {
+        Sciences.hasMany(models.Majors, {
+            onDelete: "cascade",
+        });
+    };
     return Sciences;
 };

@@ -1,0 +1,23 @@
+.heartIcon {
+    color: tomato;
+    transition: all 1s ease-in;
+}
+
+.heartIcon :hover {
+    color: red;
+}
+
+.Button {
+    background-color: transparent;
+    border: transparent;
+}
+
+.Button:hover {
+    background-color: transparent;
+    border: transparent;
+}
+
+.Button::after {
+    background-color: transparent;
+    border: transparent;
+}

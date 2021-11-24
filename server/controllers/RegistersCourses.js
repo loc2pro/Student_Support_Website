@@ -170,45 +170,46 @@ const deleteRegisterCourse = async (req, res) => {
 };
 //Lấy tất cả môn học theo học kỳ đã đăng ký.
 //input: SemesterId và StudentId
-const getRegisterCourses = async(req, res) => {
+const getRegisterCourses = async (req, res) => {
   const { SemesterId, StudentId } = req.body;
   if (!SemesterId) {
-      return res
-          .status(400)
-          .json({ success: false, message: "Vui lòng chọn học kỳ cần xem!" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Vui lòng chọn học kỳ cần xem!" });
   }
   if (!StudentId) {
-      return res
-          .status(400)
-          .json({ success: false, message: "Vui lòng chọn sinh viên cần xem!" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Vui lòng chọn sinh viên cần xem!" });
   }
+  console.log(SemesterId);
   await RegistersCourses.findAll({
-          SemesterId: SemesterId,
-          StudentId: StudentId,
-      })
-      .then(async(registerCourses) => {
-          let listCourses = [];
-          await Promise.all(
-              registerCourses.map(async(register) => {
-                  await register
-                      .getCourse()
-                      .then(async(course) => {
-                          course.setDataValue("diemmonhoc", register.tongdiem);
-                          course.setDataValue("trangthai", register.hocphi);
-                          listCourses.push(course);
-                      })
-                      .catch((err) => {});
-              })
-          );
-          return res.status(200).json({ success: true, listCourses });
-      })
-      .catch((err) => {
-          res.status(400).json({
-              success: false,
-              message: "Không tìm thấy môn học đăng ký ở học phần này",
-              err,
-          });
+   where:{ SemesterId: SemesterId,
+    StudentId: StudentId,}
+  })
+    .then(async (registerCourses) => {
+      let listCourses = [];
+      await Promise.all(
+        registerCourses.map(async (register) => {
+          await register
+            .getCourse()
+            .then(async (course) => {
+              course.setDataValue("diemmonhoc", register.tongdiem);
+              course.setDataValue("trangthai", register.hocphi);
+              listCourses.push(course);
+            })
+            .catch((err) => {});
+        })
+      );
+      return res.status(200).json({ success: true, listCourses });
+    })
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        message: "Không tìm thấy môn học đăng ký ở học phần này",
+        err,
       });
+    });
 };
 const DongHocPhi = async (req, res) => {
   const { SemesterId, StudentId } = req.body;

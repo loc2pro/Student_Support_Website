@@ -1,4 +1,5 @@
 import Axios from "axios";
+import api from "../api/index";
 import {
   PROGRESS_LEARN_FAIL,
   PROGRESS_LEARN_REQUEST,
@@ -12,7 +13,7 @@ export const listProgress = (StudentId) => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(
-      `http://localhost:5000/progresslearn/${StudentId}`
+      `${api}/progresslearn/${StudentId}`
     );
     dispatch({ type: PROGRESS_LEARN_SUCCESS, payload: data });
   } catch (error) {

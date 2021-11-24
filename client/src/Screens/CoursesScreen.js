@@ -53,13 +53,14 @@ export default function CoursesScreen(props) {
 
   const coursesRegister = useSelector((state) => state.coursesRegister);
   const {
-    success,
+    success: registerSuccess,
     registerCoursess,
     loading: loadingAlert,
     error: errorAlert,
   } = coursesRegister;
   const [lichtrung, setLichtrung] = useState([]);
   const [chitiet, setChitiet] = useState(null);
+  const [idRegister, setIdRegister] = useState();
   const [CourseId, setCourseId] = useState();
   const [ClassCourseId, setClassCourseId] = useState();
   const [modal, setmodal] = useState({
@@ -67,6 +68,14 @@ export default function CoursesScreen(props) {
   });
   const [modal1, setModal1] = useState({
     show: false,
+  });
+  const [modal2, setModal2] = useState({
+    show: false,
+  });
+  const [showToast, setShowToast] = useState({
+    show: false,
+    message: "",
+    type: null,
   });
 
   const handleCloseModal = (e) => {
@@ -104,6 +113,16 @@ export default function CoursesScreen(props) {
     }
   };
 
+  const handleCloseModal2 = (e, id) => {
+    e.preventDefault();
+    setIdRegister(id);
+    if (modal2.show) {
+      setModal2({ show: false });
+    } else {
+      setModal2({ show: true });
+    }
+  };
+
   useEffect(() => {
     if (userInfo) {
       dispatch({ type: TIMETABLE_RESET });
@@ -111,6 +130,7 @@ export default function CoursesScreen(props) {
       dispatch(listTimeTable(userInfo.user.mssv));
     }
   }, [userInfo, SemesterId]);
+
   const showCourses = (coursesId) => () => {
     setClassCourseId("");
     dispatch(detailsCourses(coursesId));
@@ -118,37 +138,58 @@ export default function CoursesScreen(props) {
     setCourseId(coursesId);
     dispatch({ type: CLASS_DETAILS_RESET });
   };
+
   const getClassDetails = (classDetailsId) => () => {
     dispatch(classDetails(classDetailsId));
     setClassCourseId(classDetailsId);
   };
+
   const getChitiet = (chitietId) => () => {
     dispatch(classRegisterDetails(chitietId));
     setChitiet(chitietId);
   };
+
   const RegisterHandler = (e) => {
     e.preventDefault();
-    if (lop)
+    if (lop) {
       dispatch(registerCourses(CourseId, SemesterId, StudentId, ClassCourseId));
+    }
+    setShowToast({ show: true, type: "success" });
   };
 
   //alert message
   if (registerCoursess) {
+    console.log(showToast.show);
     {
-      success ? alert(registerCoursess.message) : alert(errorAlert);
+      registerSuccess ? alert(registerCoursess.message) : alert(errorAlert);
+      // {
+      //   registerSuccess
+      //     ? setShowToast({
+      //         show: true,
+      //         type: "success",
+      //         message: `${registerCoursess.message}`,
+      //       })
+      //     : setShowToast({
+      //         show: false,
+      //         type: "danger",
+      //         message: `${errorAlert}`,
+      //       });
+      // }
+
+      dispatch(listTimeTable(userInfo.user.mssv));
       dispatch({ type: REGISTER_COURSES_RESET });
       dispatch({ type: COURSES_DETAILS_RESET });
       dispatch({ type: CLASS_COURSES_RESET });
       dispatch({ type: CLASS_DETAILS_RESET });
-      dispatch(listTimeTable(userInfo.user.mssv));
     }
   }
 
   //Delete register courses
-  const deleteHandler = (chitietId) => () => {
-    console.log(chitietId);
-    dispatch(deleteRegisterCourses(chitietId, SemesterId, StudentId));
+  const deleteHandler = () => {
+    setModal2({ show: false });
+    dispatch(deleteRegisterCourses(idRegister, SemesterId, StudentId));
   };
+
   useEffect(() => {
     if (action) {
       deleteSuccess ? alert(action.message) : alert(action.message);
@@ -172,6 +213,23 @@ export default function CoursesScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
+          <div className="toast">
+            <Toast
+              show={showToast.show}
+              style={{ position: "fixed", top: "20%", right: "10px" }}
+              className={`bg-${showToast.type} text-white`}
+              onClose={setShowToast.bind(this, {
+                show: false,
+                type: null,
+              })}
+              delay={3000}
+              autohide
+            >
+              <Toast.Body>
+                <strong>{showToast.message}</strong>
+              </Toast.Body>
+            </Toast>
+          </div>
           <Row>
             <h3
               style={{
@@ -288,7 +346,6 @@ export default function CoursesScreen(props) {
               </Col>
             </Row>
           )}
-
           {classdetail && (
             <div className="row center">
               <h3
@@ -363,6 +420,8 @@ export default function CoursesScreen(props) {
                 <tr>
                   <th>Mã Học Phần</th>
                   <th>Tên Lớp Học Phần</th>
+                  <th>Mã Lớp</th>
+                  <th>Tên Lớp</th>
                   <th>Số Tín Chỉ</th>
                   <th>Học Phí</th>
                   <th>Actions</th>
@@ -374,6 +433,8 @@ export default function CoursesScreen(props) {
                     <tr onClick={getChitiet(val.ClassCourse.id)}>
                       <td>{val.mahocphan}</td>
                       <td>{val.tenhocphan}</td>
+                      <td>{val.ClassCourse.malop}</td>
+                      <td>{val.ClassCourse.tenlop}</td>
                       <td>{val.sotinchi}</td>
                       <td>
                         {(val.sotinchi * 790000).toLocaleString("it-IT", {
@@ -391,7 +452,8 @@ export default function CoursesScreen(props) {
                         </Button>
                         <Button
                           variant="outline-info"
-                          onClick={deleteHandler(val.id)}
+                          // onClick={deleteHandler(val.id)}
+                          onClick={(e) => handleCloseModal2(e, val.id)}
                         >
                           Hủy
                         </Button>
@@ -447,7 +509,6 @@ export default function CoursesScreen(props) {
               </Modal.Footer>
             </Modal>
           </div>
-
           <div
             style={modal1.show ? { display: "block" } : { display: "none" }}
             class="modal"
@@ -496,6 +557,35 @@ export default function CoursesScreen(props) {
                   Close
                 </Button>
               </Modal.Footer>
+            </Modal>
+          </div>
+          <div
+            style={modal2.show ? { display: "block" } : { display: "none" }}
+            class="modal"
+          >
+            <Modal
+              show={modal2.show}
+              dialogClassName="modal-90w"
+              size="xs"
+              aria-labelledby="example-custom-modal-styling-title"
+            >
+              <Modal.Header closeButton onClick={handleCloseModal2}>
+                <Modal.Title>Bạn Có Muốn Xóa Không ?</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Row styjle={{ textAlign: "center", margin: "2rem" }}>
+                  <Button
+                    variant="danger"
+                    style={{ marginBottom: "2rem" }}
+                    onClick={deleteHandler}
+                  >
+                    Có
+                  </Button>
+                  <Button variant="secondary" onClick={handleCloseModal2}>
+                    Không
+                  </Button>
+                </Row>
+              </Modal.Body>
             </Modal>
           </div>
         </div>

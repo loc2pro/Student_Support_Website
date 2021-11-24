@@ -1,4 +1,5 @@
 import Axios from "axios";
+import api from "../api/index";
 import {
   LIST_RESULT_FAIL,
   LIST_RESULT_REQUEST,
@@ -12,7 +13,7 @@ export const listResult = (StudentId, SemesterId) => async (dispatch) => {
   });
   try {
     const { data } = await Axios.post(
-      `http://localhost:5000/learn/getLearnsbySemesters`,
+      `${api}/learn/getLearnsbySemesters`,
       { StudentId, SemesterId }
     );
     dispatch({ type: LIST_RESULT_SUCCESS, payload: data });

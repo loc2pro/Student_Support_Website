@@ -4,6 +4,7 @@ import {
   TIMETABLE_LIST_SUCCESS,
 } from "../Contants/timeTableConstants";
 import Axios from "axios";
+import api from "../api/index";
 
 export const listTimeTable = (mssv) => async (dispatch) => {
   dispatch({
@@ -12,7 +13,7 @@ export const listTimeTable = (mssv) => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(
-      `http://localhost:5000/student/getclasses/${mssv}`
+      `${api}/student/getclasses/${mssv}`
     );
     dispatch({ type: TIMETABLE_LIST_SUCCESS, payload: data });
   } catch (error) {

@@ -35,7 +35,7 @@ export default function SigninScreen(props) {
         <Col xs={7}>
           <img src={login} width="90%" />
         </Col>
-        <Col xs={5} className="login">
+        <Col xs={5} className="login" style={{marginTop:"2rem"}}>
           <h1
             style={{ textAlign: "center", textShadow: "1px 1px 2px black" }}
             className="mt-4"

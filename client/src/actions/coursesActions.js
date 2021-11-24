@@ -1,4 +1,5 @@
 import Axios from "axios";
+import api from "../api/index";
 import {
   CLASS_COURSES_FAIL,
   CLASS_COURSES_REQUEST,
@@ -30,7 +31,7 @@ export const listCourses = (semesterId) => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(
-      `http://localhost:5000/semester/${semesterId}`
+      `${api}/semester/${semesterId}`
     );
     dispatch({ type: COURSES_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -42,7 +43,7 @@ export const detailsCourses = (coursesId) => async (dispatch) => {
   dispatch({ type: COURSES_DETAILS_REQUEST, payload: coursesId });
   try {
     const { data } = await Axios.get(
-      `http://localhost:5000/course/get/${coursesId}`
+      `${api}/course/get/${coursesId}`
     );
     dispatch({ type: COURSES_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -60,7 +61,7 @@ export const classCoursess = (classcourseId) => async (dispatch) => {
   dispatch({ type: CLASS_COURSES_REQUEST, payload: classcourseId });
   try {
     const { data } = await Axios.get(
-      `http://localhost:5000/course/${classcourseId}`
+      `${api}/course/${classcourseId}`
     );
     dispatch({ type: CLASS_COURSES_SUCCESS, payload: data });
   } catch (error) {
@@ -78,7 +79,7 @@ export const classDetails = (coursesId) => async (dispatch) => {
   dispatch({ type: CLASS_DETAILS_REQUEST, payload: coursesId });
   try {
     const { data } = await Axios.get(
-      `http://localhost:5000/classcourse/${coursesId}`
+      `${api}/classcourse/${coursesId}`
     );
     dispatch({ type: CLASS_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -96,7 +97,7 @@ export const classRegisterDetails = (coursesId) => async (dispatch) => {
   dispatch({ type: REGISTER_CLASS_DETAILS_REQUEST, payload: coursesId });
   try {
     const { data } = await Axios.get(
-      `http://localhost:5000/classcourse/${coursesId}`
+      `${api}/classcourse/${coursesId}`
     );
     dispatch({ type: REGISTER_CLASS_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -118,7 +119,7 @@ export const registerCourses =
     });
     try {
       const { data } = await Axios.post(
-        `http://localhost:5000/registercourse/dangkyhocphan`,
+        `${api}/registercourse/dangkyhocphan`,
         { CourseId, SemesterId, StudentId, ClassCourseId }
       );
       dispatch({
@@ -144,7 +145,7 @@ export const deleteRegisterCourses =
     });
     try {
       const { data } = await Axios.post(
-        `http://localhost:5000/registercourse/delete`,
+        `${api}/registercourse/delete`,
         { CourseId, SemesterId, StudentId }
       );
       dispatch({

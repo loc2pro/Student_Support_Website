@@ -9,7 +9,7 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import { listDetb } from "../actions/detbActions";
 import { listPlanstudy } from "../actions/planstudyActions";
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo, loading, error } = userSignin;
   const detb = useSelector((state) => state.detb);
@@ -56,9 +56,7 @@ export default function HomeScreen() {
           <Row style={{ width: "100%" }}>
             <Col xs={12} sm={12} md={4} lg={4}>
               {userInfo && (
-                <a href="/thongtin">
-                  <img class="medium" src={userInfo.user.image} alt="avatar" />
-                </a>
+                  <img class="medium" src={userInfo.user?.image} alt="avatar" style={{textAlign:"center"}} />
               )}
             </Col>
             {userInfo ? (
@@ -70,7 +68,7 @@ export default function HomeScreen() {
                         <Form.Label style={{ fontWeight: "bold" }}>
                           MSSV:
                           <span style={{ margin: "0.2rem" }}>
-                            {userInfo.user.mssv}
+                            {userInfo.user?.mssv}
                           </span>
                         </Form.Label>
                       </Col>
@@ -88,7 +86,7 @@ export default function HomeScreen() {
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Họ Tên:
                           <span style={{ margin: "0.2rem" }}>
-                            {userInfo.user.name}
+                            {userInfo.user?.name}
                           </span>
                         </Form.Label>
                       </Col>
@@ -106,7 +104,7 @@ export default function HomeScreen() {
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Ngày Sinh:
                           <span style={{ margin: "0.2rem" }}>
-                            {userInfo.user.dateOfBirth}
+                            {userInfo.user?.dateOfBirth}
                           </span>
                         </Form.Label>
                       </Col>
@@ -114,7 +112,7 @@ export default function HomeScreen() {
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Địa Chỉ:
                           <span style={{ margin: "0.2rem" }}>
-                            {userInfo.user.address}
+                            {userInfo.user?.address}
                           </span>
                         </Form.Label>
                       </Col>

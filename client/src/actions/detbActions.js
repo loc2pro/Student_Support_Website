@@ -1,4 +1,5 @@
 import Axios from "axios";
+import api from "../api/index";
 import {
   DETB_LIST_FAIL,
   DETB_LIST_REQUEST,
@@ -12,7 +13,7 @@ export const listDetb = (StudentId, SemesterId) => async (dispatch) => {
   });
   try {
     const { data } = await Axios.post(
-      `http://localhost:5000/registercourse/getRegisterCourses`,
+      `${api}/registercourse/getRegisterCourses`,
       { StudentId, SemesterId }
     );
     dispatch({ type: DETB_LIST_SUCCESS, payload: data });

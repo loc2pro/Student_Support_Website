@@ -5,6 +5,7 @@ const env = "ACCESS_TOKEN_SECRET";
 const config = require(__dirname + "/../config/config.json")[env];
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const xlsx = require("xlsx");
 
 const getSciences = async (req, res) => {
   const mssv = req.params.mssv;
@@ -44,34 +45,34 @@ const getStudent = async (req, res) => {
     .catch((err) => {});
 };
 
-const createStudent = async (req, res) => {
-  const { mssv, name, password, email, dateOfBirth, address, MajorId } =
-    req.body;
+// const createStudent = async (req, res) => {
+//   const { mssv, name, password, email, dateOfBirth, address, MajorId } =
+//     req.body;
 
-  bcrypt.hash(password, 10).then(async (hash) => {
-    await Students.create({
-      mssv: mssv,
-      name: name,
-      password: hash,
-      email: email,
-      dateOfBirth: dateOfBirth,
-      address: address,
-      MajorId: MajorId,
-    })
-      .then((newsudent) => {
-        res.status(200).json({
-          success: true,
-          message: "Create student success",
-          newsudent,
-        });
-      })
-      .catch((err) => {
-        res
-          .status(400)
-          .json({ success: false, message: "Create student failer", err });
-      });
-  });
-};
+//   bcrypt.hash(password, 10).then(async (hash) => {
+//     await Students.create({
+//       mssv: mssv,
+//       name: name,
+//       password: hash,
+//       email: email,
+//       dateOfBirth: dateOfBirth,
+//       address: address,
+//       MajorId: MajorId,
+//     })
+//       .then((newsudent) => {
+//         res.status(200).json({
+//           success: true,
+//           message: "Create student success",
+//           newsudent,
+//         });
+//       })
+//       .catch((err) => {
+//         res
+//           .status(400)
+//           .json({ success: false, message: "Create student failer", err });
+//       });
+//   });
+// };
 
 const updateStudent = async (req, res) => {
   const { mssv, name, password, email, dateOfBirth, address } = req.body;
@@ -186,14 +187,22 @@ const forgotPassword = async (req, res) => {
 };
 
 const deleteStudent = async (req, res) => {
-  const mssv = req.params.mssv;
-  await Students.destroy({ where: { mssv: mssv } })
+  const id = req.params.id;
+  await Students.destroy({ where: { id: id } })
     .then((result) => {
-      res.status(200).json({
-        success: true,
-        message: "Delete student success",
-        result,
-      });
+      if (result > 0) {
+        res.status(200).json({
+          success: true,
+          message: "Delete student success",
+          result,
+        });
+      } else {
+        res.status(200).json({
+          success: false,
+          message: "Delete student failer",
+          result,
+        });
+      }
     })
     .catch((err) => {
       res.status(400).json({
@@ -265,13 +274,13 @@ const sendEmail = async (req, res) => {
   var mail = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "locit2000@gmail.com", 
-      pass: "0981074090", 
+      user: "locit2000@gmail.com",
+      pass: "0981074090",
     },
   });
   let newpass = (Math.random() + 1).toString(36).substring(7);
   var mailOptions = {
-    from: "locit2000@gmail.com",
+    from: "testphongdaotao@iuh.edu.vn",
     to: email,
     subject: "Reset Password ",
     html: `<p>Mật khẩu mới của bạn là:${newpass}</p>`,
@@ -279,39 +288,212 @@ const sendEmail = async (req, res) => {
   bcrypt.hash(newpass, 10).then(async (hash) => {
     await Students.update({ password: hash }, { where: { email: email } })
       .then((result) => {
-       if(result>0){
-        mail.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            res.status(400).json({
-              success: false,
-              err: error,
-              message: "Vui Lòng Nhập Lại Email",
-            });
-          } else {
-            return res.status(200).json({
-              success: true,
-              newpass: newpass,
-              message: "Vui Lòng Kiểm Tra Email Của Bạn",
-              result,
-            });
-          }
-        });
-       }else{
-        return res.status(400).json({
-          success: false,
-          message:"Thất bại",
-          err: error,
-        });
-       }
+        if (result > 0) {
+          mail.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              res.status(400).json({
+                success: false,
+                err: error,
+                message: "Vui Lòng Nhập Lại Email",
+              });
+            } else {
+              return res.status(200).json({
+                success: true,
+                newpass: newpass,
+                message: "Vui Lòng Kiểm Tra Email Của Bạn",
+                result,
+              });
+            }
+          });
+        } else {
+          return res.status(400).json({
+            success: false,
+            message: "Thất bại",
+            err: error,
+          });
+        }
       })
       .catch((err) => {
         return res.status(400).json({
           success: false,
           err: err,
-          message:"Email Không Tồn Tại"
+          message: "Email Không Tồn Tại",
         });
       });
   });
+};
+//admin
+const getStudents = async (req, res) => {
+  await Students.findAll()
+    .then((students) => {
+      res.status(200).json({ success: true, students });
+    })
+    .catch((err) => {
+      res.status(400).json({ success: false, err });
+    });
+};
+
+const getListStudentsByMajor = async (req, res) => {
+  await Students.findAll({ where: { MajorId: req.params.id } })
+    .then((students) => {
+      res.status(200).json({ success: true, students });
+    })
+    .catch((err) => {
+      res.status(200).json({ success: false, err });
+    });
+};
+
+const createStudent = async (req, res) => {
+  const { name, khoa, email, dateOfBirth, address, MajorId } = req.body;
+  //mới tạo mặc đinh pass là 1-8
+  bcrypt.hash("12345678", 10).then(async (hash) => {
+    await Students.create({
+      name: name,
+      mssv: khoa,
+      khoa: khoa,
+      password: hash,
+      email: email,
+      dateOfBirth: dateOfBirth,
+      address: address,
+      MajorId: MajorId,
+    })
+      .then(async (newstudent) => {
+        let mssv = newstudent.khoa;
+        while (mssv + newstudent.id < 10000000) {
+          mssv = mssv * 10;
+        }
+        mssv = mssv + newstudent.id;
+        await Students.update(
+          {
+            mssv: mssv,
+          },
+          { where: { id: newstudent.id } }
+        )
+          .then(async (result1) => {
+            await Students.findByPk(newstudent.id)
+              .then((result) => {
+                res.status(200).json({
+                  success: true,
+                  message: "Tạo sinh viên thành công",
+                  result,
+                });
+              })
+              .catch((err) => {
+                res.status(200).json({
+                  success: false,
+                  message: "Create student failer1",
+                  err,
+                });
+              });
+          })
+          .catch((err) => {
+            res
+              .status(200)
+              .json({ success: false, message: "Create student failer2", err });
+          });
+      })
+      .catch((err) => {
+        res
+          .status(200)
+          .json({ success: false, message: "Create student failer", err });
+      });
+  });
+};
+
+const createStudentByExcel = async(req, res) => {
+  const { data, MajorId } = req.body;
+  if (data.length < 1) {
+      return res.json({
+          success: false,
+          message: "Không có sinh viên nào cần thêm",
+      });
+  }
+  if (!MajorId) {
+      return res.json({ success: false, message: "Vui lòng chọn nghành" });
+  }
+  await bcrypt
+      .hash("12345678", 10)
+      .then(async(hash) => {
+          let soluong = 0;
+          await Promise.all(
+                  await data.map(async(st) => {
+                      await Students.create({
+                              name: st.name,
+                              mssv: st.khoa,
+                              khoa: st.khoa,
+                              password: hash,
+                              email: st.email,
+                              dateOfBirth: st.dateOfBirth,
+                              address: st.address,
+                              MajorId: MajorId,
+                          })
+                          .then(async(newstudent) => {
+                              let mssv = newstudent.khoa;
+                              while (mssv + newstudent.id < 10000000) {
+                                  mssv = mssv * 10;
+                              }
+                              mssv = mssv + newstudent.id;
+                              await Students.update({
+                                      mssv: mssv,
+                                  }, { where: { id: newstudent.id } })
+                                  .then(async(result1) => {
+                                      if (result1 > 0) await soluong++;
+                                  })
+                                  .catch((err) => {
+                                      console.log(soluong);
+                                      return res.json({
+                                          success: false,
+                                          message: `Thêm thành công ${soluong} sinh viên.`,
+                                      });
+                                  });
+                          })
+                          .catch((err) => {
+                              console.log("soluong", soluong);
+                              return res.json({
+                                  success: false,
+                                  message: `Thêm thành công ${soluong} sinh viên.`,
+                                  err,
+                              });
+                          });
+                  })
+              )
+              .then((result) => {})
+              .catch((err) => {});
+          return res.json({
+              success: true,
+              message: `Thêm thành công ${data.length} vào danh sách sinh viên`,
+          });
+      })
+      .catch((err) => {});
+};
+const updateStudentAdmin = async (req, res) => {
+  const { name, email, dateOfBirth, address, id } = req.body;
+  await Students.update(
+    {
+      name: name,
+      email: email,
+      dateOfBirth: dateOfBirth,
+      address: address,
+    },
+    { where: { id: id } }
+  )
+    .then(async (result) => {
+      await Students.findOne({ where: { id: id } })
+
+        .then((student) => {
+          res.status(200).json({
+            success: true,
+            message: `Update student ${name} success`,
+            student,
+          });
+        })
+        .catch((err) => {});
+    })
+    .catch((err) => {
+      res
+        .status(200)
+        .json({ success: false, message: "update student failer", err });
+    });
 };
 
 module.exports = {
@@ -322,5 +504,9 @@ module.exports = {
   deleteStudent,
   getClasses,
   getStudent,
+  createStudentByExcel,
+  getStudents,
+  getListStudentsByMajor,
+  updateStudentAdmin,
   sendEmail,
 };

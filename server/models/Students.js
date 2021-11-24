@@ -1,9 +1,12 @@
 module.exports = (sequelize, DataType) => {
     const Students = sequelize.define("Students", {
+        khoa: {
+            type: DataType.INTEGER,
+            allowNull: true,
+        },
         mssv: {
             type: DataType.STRING,
-            allowNull: false,
-            unique: true,
+            allowNull: true,
         },
         name: {
             type: DataType.STRING,
@@ -16,7 +19,6 @@ module.exports = (sequelize, DataType) => {
         email: {
             type: DataType.STRING,
             allowNull: false,
-            unique: true,
         },
         dateOfBirth: {
             type: DataType.STRING,

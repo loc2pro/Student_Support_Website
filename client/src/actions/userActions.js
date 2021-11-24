@@ -14,11 +14,12 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
 } from "../Contants/userConstants";
+import api from "../api/index"
 
 export const signin = (mssv, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { mssv, password } });
   try {
-    const { data } = await Axios.post("http://localhost:5000/auth/login", {
+    const { data } = await Axios.post(`${api}/auth/login`, {
       mssv,
       password,
     });
@@ -46,9 +47,12 @@ export const detailsUser = (mssv) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(`http://localhost:5000/student/${mssv}`, {
-      headers: { Authorization: `Bearer ${userInfo?.token}` },
-    });
+    const { data } = await Axios.get(
+      `${api}/student/getsciences/${mssv}`,
+      {
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
+      }
+    );
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -70,7 +74,7 @@ export const updateUserProfile =
     } = getState();
     try {
       const { data } = await Axios.post(
-        `http://localhost:5000/student/update`,
+        `${api}/student/update`,
         { mssv, name, password, email, dateOfBirth, address },
         { headers: { Authorization: `Bearer ${userInfo.token}` } }
         // {
@@ -90,11 +94,11 @@ export const updateUserProfile =
   };
 
 export const forgotPassword = (email) => async (dispatch) => {
-  dispatch({ type: FORGOT_PASSWORD_REQUEST, payload: {email} });
+  dispatch({ type: FORGOT_PASSWORD_REQUEST, payload: { email } });
   try {
     const { data } = await Axios.post(
-      `http://localhost:5000/student/sendmail`,
-      {email}
+      `${api}/student/sendmail`,
+      { email }
     );
     dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data });
   } catch (error) {

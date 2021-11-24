@@ -28,6 +28,12 @@ Content-Type: application/json
 }
 
 ### Xóa Môn Đã Đăng Ký
-Get http://localhost:5000/registercourse/delete/2
+Post http://localhost:5000/registercourse/delete
+Content-Type: application/json
 
+{
+    "SemesterId": 1,
+      "CourseId": 1,
+      "StudentId": 1
+}
 

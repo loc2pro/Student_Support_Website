@@ -35,8 +35,8 @@ export default function ProgressLearnScreen() {
                     label: "Population (millions)",
                     backgroundColor: ["#32CD32", "#20B2AA"],
                     data: [
-                      listprogress.progress.tinchi,
-                      listprogress.progress.tinchiyeucau,
+                      listprogress.progress?.tinchi,
+                      listprogress.progress?.tinchiyeucau,
                     ],
                   },
                 ],

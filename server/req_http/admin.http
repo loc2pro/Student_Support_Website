@@ -1,0 +1,23 @@
+Post http://localhost:5000/admin/register
+Content-Type: application/json
+
+{
+    "username": "locadmin",
+    "email":"loc@gmail.com",
+    "password": "loc123",
+    "avatar":"https://i.pinimg.com/474x/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+}
+
+###
+Post http://localhost:5000/admin/login
+Content-Type: application/json
+
+{
+   "username": "locadmin",
+    "password": "loc123"
+}
+
+
+###
+GET http://localhost:5000/admin/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzNTc1OTk0OH0.W0-zF1S4quxMVLmY7iH2AgCZb5P8obqYCKhHVc6pXxg

@@ -1,11 +1,12 @@
 import Axios from "axios";
+import api from "../api/index";
 import { PAY_FAIL, PAY_REQUEST, PAY_SUCCESS } from "../Contants/payConstants";
 
 export const payActions = (SemesterId, StudentId) => async (dispatch) => {
   dispatch({ type: PAY_REQUEST, payload: { SemesterId, StudentId } });
   try {
     const { data } = await Axios.post(
-      `http://localhost:5000/registercourse/donghocphi`,
+      `${api}/registercourse/donghocphi`,
       { SemesterId, StudentId }
     );
     dispatch({ type: PAY_SUCCESS, payload: data });

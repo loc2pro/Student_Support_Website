@@ -81,6 +81,7 @@ export default function PayScreen() {
     if (semester) {
       setSemesterId(e.target.value);
       dispatch(listDetb(StudentId, e.target.value));
+      console.log(e.target.value);
     }
   };
 
@@ -137,7 +138,7 @@ export default function PayScreen() {
                   fontWeight: "bold",
                 }}
               >
-                Công Nợ
+                Học Phí
               </h2>
               <Table bordered responsive="lg">
                 <thead>

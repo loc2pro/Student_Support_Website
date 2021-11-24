@@ -15,9 +15,9 @@ const Login = async (req, res) => {
     //Check for mssv
     const user = await Students.findOne({ where: { mssv: mssv } });
     if (!user)
-      return res.json({
+      return res.status(404).json({
         success: false,
-        message: "Incorrect mssv or password",
+        message: "Không Tìm Thấy MSSV",
       });
     else {
       //check password
@@ -61,7 +61,7 @@ const Register = async (req, res) => {
   const { mssv, password, name, email } = req.body;
   if (!mssv || !password) {
     return res
-      .status(200)
+      .status(400)
       .json({ success: false, message: "Missing mssv or password" });
   }
   try {
