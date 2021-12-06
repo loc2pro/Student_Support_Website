@@ -3,9 +3,26 @@ Post http://localhost:5000/planstudy/create
 Content-Type: application/json
 
 {
-    "tenkehoach":"Kế hoạch học tập khoa Kinh Tế",
-    "majorId":2
+    "tenkehoach":"Kế hoạch học tập khoa Toán",
+    "majorId":"2"
 }
 
 ### Lấy kế hoạch học tập
-GET http://localhost:5000/planstudy/2
+GET http://localhost:5000/planstudy/get/2
+
+### Lấy tất cả kế hoạch học tập
+GET http://localhost:5000/planstudy/getlist
+
+
+### lấy kế hoạch theo ngành
+
+GET http://localhost:5000/planstudy/getlistplanstudybymajor/1
+
+### Sửa kế hoạch học tập
+POST http://localhost:5000/planstudy/update
+Content-Type: application/json
+
+{
+    "tenkehoach":"Kế Hoạch",
+    "id":"27"
+}

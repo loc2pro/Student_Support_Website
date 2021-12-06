@@ -28,3 +28,16 @@ GET http://localhost:5000/course/get/1
 
 ### get 1 Course
 GET http://localhost:5000/paypal
+
+### Cập nhật
+Post http://localhost:5000/course/update
+Content-Type: application/json
+
+{
+    "id":16,
+    "mahocphan": "1211",
+    "tenhocphan":"adad223ad",
+    "sotinchi":3,
+    "sotiet": 45,
+    "semesterId":3
+}

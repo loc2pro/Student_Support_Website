@@ -16,11 +16,12 @@
         "dialect": "mysql"
     },
     "production": {
-        "username": "root",
+        "username": "admin",
         "password": "password",
 
-        "database": "database_production",
-        "host": "127.0.0.1",
+        "database": "quanlysinhvien",
+        "host": "sinhvien-iuh.c52psgx93rzv.ap-southeast-1.rds.amazonaws.com",
+        "port": 3306,
         "dialect": "mysql"
     },
     "ACCESS_TOKEN_SECRET": "nguyenhuuloc",

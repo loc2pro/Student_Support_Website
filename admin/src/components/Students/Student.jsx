@@ -21,6 +21,9 @@ function Student({ student, setShowModalUpdate, setShowModalDelete }) {
   return (
     <tr>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+        {student.khoa}
+      </th>
+      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
         {student.mssv}
       </th>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">

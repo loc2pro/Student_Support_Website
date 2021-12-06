@@ -31,7 +31,7 @@ export const listCourses = (semesterId) => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(
-      `${api}/semester/${semesterId}`
+      `${api}/semester/get/${semesterId}`
     );
     dispatch({ type: COURSES_LIST_SUCCESS, payload: data });
   } catch (error) {

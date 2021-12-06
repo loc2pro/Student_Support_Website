@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Sciences = require("../models/Sciences");
 const { Students, ClassCourses, Courses, Teachers } = require("../models");
 const bcrypt = require("bcrypt");
@@ -6,6 +7,15 @@ const config = require(__dirname + "/../config/config.json")[env];
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const xlsx = require("xlsx");
+const { v4: uuidv4 } = require("uuid");
+const AWS = require("aws-sdk");
+const multer = require("multer");
+const upload = multer();
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+});
 
 const getSciences = async (req, res) => {
   const mssv = req.params.mssv;
@@ -345,13 +355,25 @@ const getListStudentsByMajor = async (req, res) => {
 
 const createStudent = async (req, res) => {
   const { name, khoa, email, dateOfBirth, address, MajorId } = req.body;
-  //mới tạo mặc đinh pass là 1-8
+  console.log(req.body);
+  const file = req.file;
+  let myFile = req.file.originalname.split(".");
+  const fileTyle = myFile[myFile.length - 1];
+
+  const params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: `${uuidv4()}.${fileTyle}`,
+    Body: req.file.buffer,
+    ContentType: "image/png",
+  };
+  // mới tạo mặc đinh pass là 1-8
   bcrypt.hash("12345678", 10).then(async (hash) => {
     await Students.create({
       name: name,
       mssv: khoa,
       khoa: khoa,
       password: hash,
+      image: params.Key,
       email: email,
       dateOfBirth: dateOfBirth,
       address: address,
@@ -372,14 +394,23 @@ const createStudent = async (req, res) => {
           .then(async (result1) => {
             await Students.findByPk(newstudent.id)
               .then((result) => {
-                res.status(200).json({
-                  success: true,
-                  message: "Tạo sinh viên thành công",
-                  result,
+                s3.upload(params, upload.fields([]), (error, data) => {
+                  if (error) {
+                    console.log(error.message);
+                    return res.status(500).json({
+                      success: false,
+                      message: "Upload hình sinh viên thất bại",
+                    });
+                  }
+                  return res.status(200).json({
+                    success: true,
+                    message: "Tạo sinh viên thành công",
+                    result,
+                  });
                 });
               })
               .catch((err) => {
-                res.status(200).json({
+                return res.status(200).json({
                   success: false,
                   message: "Create student failer1",
                   err,
@@ -387,84 +418,87 @@ const createStudent = async (req, res) => {
               });
           })
           .catch((err) => {
-            res
+            return res
               .status(200)
               .json({ success: false, message: "Create student failer2", err });
           });
       })
       .catch((err) => {
-        res
+        return res
           .status(200)
           .json({ success: false, message: "Create student failer", err });
       });
   });
 };
 
-const createStudentByExcel = async(req, res) => {
+const createStudentByExcel = async (req, res) => {
   const { data, MajorId } = req.body;
   if (data.length < 1) {
-      return res.json({
-          success: false,
-          message: "Không có sinh viên nào cần thêm",
-      });
+    return res.json({
+      success: false,
+      message: "Không có sinh viên nào cần thêm",
+    });
   }
   if (!MajorId) {
-      return res.json({ success: false, message: "Vui lòng chọn nghành" });
+    return res.json({ success: false, message: "Vui lòng chọn nghành" });
   }
   await bcrypt
-      .hash("12345678", 10)
-      .then(async(hash) => {
-          let soluong = 0;
-          await Promise.all(
-                  await data.map(async(st) => {
-                      await Students.create({
-                              name: st.name,
-                              mssv: st.khoa,
-                              khoa: st.khoa,
-                              password: hash,
-                              email: st.email,
-                              dateOfBirth: st.dateOfBirth,
-                              address: st.address,
-                              MajorId: MajorId,
-                          })
-                          .then(async(newstudent) => {
-                              let mssv = newstudent.khoa;
-                              while (mssv + newstudent.id < 10000000) {
-                                  mssv = mssv * 10;
-                              }
-                              mssv = mssv + newstudent.id;
-                              await Students.update({
-                                      mssv: mssv,
-                                  }, { where: { id: newstudent.id } })
-                                  .then(async(result1) => {
-                                      if (result1 > 0) await soluong++;
-                                  })
-                                  .catch((err) => {
-                                      console.log(soluong);
-                                      return res.json({
-                                          success: false,
-                                          message: `Thêm thành công ${soluong} sinh viên.`,
-                                      });
-                                  });
-                          })
-                          .catch((err) => {
-                              console.log("soluong", soluong);
-                              return res.json({
-                                  success: false,
-                                  message: `Thêm thành công ${soluong} sinh viên.`,
-                                  err,
-                              });
-                          });
-                  })
+    .hash("12345678", 10)
+    .then(async (hash) => {
+      let soluong = 0;
+      await Promise.all(
+        await data.map(async (st) => {
+          await Students.create({
+            name: st.name,
+            mssv: st.khoa,
+            khoa: st.khoa,
+            password: hash,
+            email: st.email,
+            dateOfBirth: st.dateOfBirth,
+            address: st.address,
+            MajorId: MajorId,
+          })
+            .then(async (newstudent) => {
+              let mssv = newstudent.khoa;
+              while (mssv + newstudent.id < 10000000) {
+                mssv = mssv * 10;
+              }
+              mssv = mssv + newstudent.id;
+              await Students.update(
+                {
+                  mssv: mssv,
+                },
+                { where: { id: newstudent.id } }
               )
-              .then((result) => {})
-              .catch((err) => {});
-          return res.json({
-              success: true,
-              message: `Thêm thành công ${data.length} vào danh sách sinh viên`,
-          });
-      })
-      .catch((err) => {});
+                .then(async (result1) => {
+                  if (result1 > 0) await soluong++;
+                })
+                .catch((err) => {
+                  console.log(soluong);
+                  return res.json({
+                    success: false,
+                    message: `Thêm thành công ${soluong} sinh viên.`,
+                  });
+                });
+            })
+            .catch((err) => {
+              console.log("soluong", soluong);
+              return res.json({
+                success: false,
+                message: `Thêm thành công ${soluong} sinh viên.`,
+                err,
+              });
+            });
+        })
+      )
+        .then((result) => {})
+        .catch((err) => {});
+      return res.json({
+        success: true,
+        message: `Thêm thành công ${data.length} vào danh sách sinh viên`,
+      });
+    })
+    .catch((err) => {});
 };
 const updateStudentAdmin = async (req, res) => {
   const { name, email, dateOfBirth, address, id } = req.body;
@@ -481,7 +515,7 @@ const updateStudentAdmin = async (req, res) => {
       await Students.findOne({ where: { id: id } })
 
         .then((student) => {
-          res.status(200).json({
+          return res.status(200).json({
             success: true,
             message: `Update student ${name} success`,
             student,
@@ -490,7 +524,7 @@ const updateStudentAdmin = async (req, res) => {
         .catch((err) => {});
     })
     .catch((err) => {
-      res
+      return res
         .status(200)
         .json({ success: false, message: "update student failer", err });
     });

@@ -38,7 +38,7 @@ export default function Dashboard() {
             <StatusCard
               color="orange"
               icon="groups"
-              title="New Users"
+              title="New Sinh Viên"
               amount="2,356"
               percentage="3.48"
               percentageIcon="arrow_downward"

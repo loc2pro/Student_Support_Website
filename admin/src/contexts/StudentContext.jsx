@@ -43,9 +43,10 @@ const StudentContextProvider = ({ children }) => {
     }
   };
 
-  const createStudent = async (newstudent) => {
+  const createStudent = async (data) => {
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
     try {
-      const res = await axios.post(`${api}/student/create`, newstudent);
+      const res = await axios.post(`${api}/student/create`, data, config);
       if (res.data.success) {
         dispatch({
           type: CREATE_STUDENT,

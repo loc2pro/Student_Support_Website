@@ -14,6 +14,17 @@ const {
   updateStudentAdmin,
 } = require("../controllers/Students");
 const router = express.Router();
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+const uploadImage = multer({ storage: storage });
+const upload = multer();
 
 router.get("/getsciences/:mssv", getSciences);
 // router.post("/create", createStudent);
@@ -27,7 +38,7 @@ router.post("/sendmail", sendEmail);
 // router.get("/getsciences/:mssv", getSciences);
 router.get("/", getStudents);
 router.get("/:id", getListStudentsByMajor);
-router.post("/create", createStudent);
+router.post("/create", upload.single("image"), createStudent);
 router.post("/create/excel", createStudentByExcel);
 router.post("/admin/update", updateStudentAdmin);
 router.get("/delete/:id", deleteStudent);

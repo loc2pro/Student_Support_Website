@@ -8,6 +8,8 @@ import TienDo from "../Components/layout/TienDo";
 import { Bar, Doughnut } from "react-chartjs-2";
 import { listDetb } from "../actions/detbActions";
 import { listPlanstudy } from "../actions/planstudyActions";
+import env from "react-dotenv";
+import path from "../path";
 
 export default function HomeScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
@@ -56,7 +58,7 @@ export default function HomeScreen(props) {
           <Row style={{ width: "100%" }}>
             <Col xs={12} sm={12} md={4} lg={4}>
               {userInfo && (
-                  <img class="medium" src={userInfo.user?.image} alt="avatar" style={{textAlign:"center"}} />
+                  <img class="medium" src={`${path}${userInfo.user?.image}`} alt="avatar" style={{textAlign:"center"}} />
               )}
             </Col>
             {userInfo ? (

@@ -105,6 +105,7 @@ export default function CreateExcel({
               name="file"
               onChange={(e) => {
                 const file = e.target.files[0];
+                console.log(file)
                 readFile(file);
               }}
               size="lg"

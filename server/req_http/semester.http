@@ -7,18 +7,21 @@ Content-Type: application/json
     "planstudyId":2
 }
 
-###Tạo mới học kỳ học tập.
+###update mới học kỳ học tập.
 Post http://localhost:5000/semester/update
 Content-Type: application/json
 
 {
-    "id":2,
-    "tenhocky":"HK2(2021-2022)",
+    "id":13,
+    "tenhocky":"HK22232322(2021-2022)",
     "planstudyId":1
 }
 
 ### lấy môn học từ học kỳ
-get http://localhost:5000/semester/1
+get http://localhost:5000/semester/get/1
 
 ### Xóa học kỳ
-get http://localhost:5000/semester/delete/1
+get http://localhost:5000/semester/delete/8
+
+### lấy môn danh sach hoc ky
+get http://localhost:5000/semester/list

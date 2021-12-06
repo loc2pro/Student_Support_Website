@@ -43,9 +43,9 @@ const StudentView = () => {
   useEffect(() => {
     const liststudent = students.filter((student) => {
       if (
-        student.mssv.toLowerCase().includes(keyWord.toLowerCase()) ||
-        student.name.toLowerCase().includes(keyWord.toLowerCase()) ||
-        student.email.toLowerCase().includes(keyWord.toLowerCase())
+        student.mssv?.toLowerCase().includes(keyWord.toLowerCase()) ||
+        student.name?.toLowerCase().includes(keyWord.toLowerCase()) ||
+        student.email?.toLowerCase().includes(keyWord.toLowerCase())
       ) {
         return student;
       }
@@ -56,7 +56,7 @@ const StudentView = () => {
     const indexOfFirst = indexOfLast - perPage;
     setlistStudents(liststudent.slice(indexOfFirst, indexOfLast));
   }, [students, currentPage, perPage, keyWord]);
-
+  console.log("major", major);
   const [toast, setToast] = useState({
     show: false,
     success: false,
@@ -331,10 +331,7 @@ const StudentView = () => {
                         <thead>
                           <tr>
                             <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
-                              Số Thứ Tự
-                            </th>
-                            <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
-                              Khoa
+                              Khoá
                             </th>
                             <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                               Mssv

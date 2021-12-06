@@ -4,6 +4,7 @@ const db = require("./models");
 const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
+var bodyParser = require('body-parser')
 
 const authRouter = require("./routers/auth");
 const adminRouter = require("./routers/admin");
@@ -24,6 +25,7 @@ const App = express();
 
 App.use(express.json());
 App.use(cors());
+App.use(express.urlencoded({extended: true}))
 
 App.use("/auth", authRouter);
 App.use("/admin", adminRouter);
@@ -46,7 +48,7 @@ App.get("/paypal", (req, res) => {
       "AXV369iXt4EhruhomVgan0pYTfWoIX8bO6V0HYieC1OvUHYDJsvXYNEeE3WN2dBzej_Jqfr34xAPvt3T"
   );
 });
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 
 const httpServer = http.Server(App);
 const io = new Server(httpServer, { cors: { origin: "*" } });

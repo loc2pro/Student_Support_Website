@@ -13,6 +13,9 @@ import landing from "./components/layout/Landing";
 import ScienceView from "./views/ScienceView";
 import MajorView from "./views/MajorView";
 import StudentView from "./views/StudentView";
+import PlanStudyView from "./views/PlanStudyView";
+import SemesterView from "./views/SemesterView";
+import CoursesView from "./views/CoursesView";
 
 function App() {
   return (
@@ -33,6 +36,9 @@ function App() {
           <ProtectedRoute exact path="/students" component={StudentView} />{" "}
           <ProtectedRoute exact path="/science" component={ScienceView} />{" "}
           <ProtectedRoute exact path="/major" component={MajorView} />{" "}
+          <ProtectedRoute exact path="/planstudy" component={PlanStudyView} />{" "}
+          <ProtectedRoute exact path="/semester" component={SemesterView} />{" "}
+          <ProtectedRoute exact path="/courses" component={CoursesView} />{" "}
           <Redirect from="*" to="/" />
         </Switch>{" "}
       </Router>{" "}

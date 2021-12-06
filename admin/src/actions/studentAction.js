@@ -1,7 +1,6 @@
 import axios from "axios";
 import api from "../api";
 import { CREATE_MAJOR_FAIL } from "../contants/MajorContant";
-import { DELETE_SCIENCE_REQUEST } from "../contants/scienceContant";
 import {
     CREATE_STUDENT_EXCEL_FAIL,
     CREATE_STUDENT_EXCEL_REQUEST,
@@ -41,6 +40,7 @@ export const getListStudentsByMajor = (major) => async(dispatch) => {
         const { data } = await axios.get(`${api}/student/${major.id}`);
         if (data.success) {
             dispatch({ type: GET_LIST_STUDENT_SUCCESS, payload: data.students });
+            dispatch({ type: GET_STUDENT_MAJOR, payload: major });
         } else {
             dispatch({ type: GET_LIST_STUDENT_FAIL });
         }
@@ -105,6 +105,7 @@ export const createListStudentByExcel = (form) => async(dispatch) => {
     try {
         const { data } = await axios.post(`${api}/student/create/excel`, form);
         if (data.success) {
+            console.log("form thêm:", form);
             dispatch({ type: CREATE_STUDENT_EXCEL_SUCCESS });
         } else {
             dispatch({ type: CREATE_STUDENT_EXCEL_FAIL });

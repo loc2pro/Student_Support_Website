@@ -9,6 +9,9 @@ import Input from "@material-tailwind/react/Input";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { createStudent } from "../../actions/studentAction";
+import FormData from "form-data";
+import axios from "axios";
+import api from "../../api";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -24,6 +27,7 @@ export default function CreateStudent({
     name: "",
     khoa: null,
     email: "",
+    image: null,
     dateOfBirth: "",
     address: "",
     MajorId: major.id,
@@ -32,10 +36,34 @@ export default function CreateStudent({
   const dispatch = useDispatch();
   const { majors } = useSelector((state) => state.listMajors);
   const handleCreate = (e) => {
+    // e.preventDefault();
+    // console.log(studentForm);
+    // const data = dispatch(createStudent(studentForm));
+    // console.log(data);
+    // data.then((data) => {
+    //   setToast({
+    //     show: true,
+    //     message: data.message
+    //       ? data.message
+    //       : `Thêm sinh viên ${studentForm.name} thành công`,
+    //     success: data.success,
+    //   });
+    // });
+    // resetForm();
+
+    //test
     e.preventDefault();
-    const data = dispatch(createStudent(studentForm));
-    console.log(data);
-    data.then((data) => {
+    const data = new FormData();
+    data.append("name", studentForm.name);
+    data.append("khoa", studentForm.khoa);
+    data.append("email", studentForm.email);
+    data.append("dateOfBirth", studentForm.dateOfBirth);
+    data.append("address", studentForm.address);
+    data.append("MajorId", studentForm.MajorId);
+    data.append("image", studentForm.image);
+    console.log(studentForm);
+    const create = dispatch(createStudent(data));
+    create.then((data) => {
       setToast({
         show: true,
         message: data.message
@@ -51,6 +79,7 @@ export default function CreateStudent({
     setstudentForm({
       name: "",
       khoa: null,
+      image: null,
       email: "",
       dateOfBirth: "",
       address: "",
@@ -102,6 +131,7 @@ export default function CreateStudent({
               type="text"
               color="lightBlue"
               name="name"
+              id="name"
               value={studentForm.name}
               onChange={handleChangedInput}
               size="lg"
@@ -112,9 +142,39 @@ export default function CreateStudent({
           </div>
           <div className="mt-6">
             <Input
+              type="file"
+              color="lightBlue"
+              name="image"
+              id="image"
+              onChange={(e) => {
+                e.preventDefault();
+                const file = e.target.files[0];
+                // const data = new FormData();
+                // data.append("image", file);
+                setstudentForm({ ...studentForm, image: file });
+                // console.log("Data", data);
+                console.log(file);
+
+                //
+                // let reader = new FileReader();
+                // reader.readAsDataURL(file);
+                // reader.onload((e) => {
+                //   setstudentForm({ ...studentForm, image: e.target.result });
+                // console.log("Data", e.target.result);
+                // });
+              }}
+              size="lg"
+              placeholder="Image"
+              require
+            />
+          </div>
+
+          <div className="mt-6">
+            <Input
               type="text"
               color="lightBlue"
               name="email"
+              id="email"
               value={studentForm.email}
               onChange={handleChangedInput}
               size="lg"

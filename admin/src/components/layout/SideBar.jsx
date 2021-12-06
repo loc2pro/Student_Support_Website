@@ -34,7 +34,7 @@ export default function Sidebar() {
                   activeClassName="no-underline bg-blue-900 hover:bg-blue-900 text-white"
                 >
                   <Icon name="dashboard" size="2xl" />
-                  Dashboard
+                  Trang Chủ
                 </NavLink>
               </li>
               <li className="rounded-lg mb-2">
@@ -73,34 +73,34 @@ export default function Sidebar() {
               <li className="rounded-lg mb-2 ">
                 <NavLink
                   exact
-                  to="/tables"
+                  to="/planstudy"
                   className="flex gap-4 text-sm no-underline text-gray-100 font-light px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-blue-900 hover:text-blue-500 focus:text-white transition-all"
                   activeClassName="no-underline bg-blue-900 hover:bg-blue-900 text-white"
                 >
                   <Icon name="toc" size="2xl" />
-                  Tables
+                  Kế Hoạch Niên Giám
                 </NavLink>
               </li>
               <li className="rounded-lg mb-2 ">
                 <NavLink
                   exact
-                  to="/tables"
+                  to="/semester"
                   className="flex gap-4 text-sm no-underline text-gray-100 font-light px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-blue-900 hover:text-blue-500 focus:text-white transition-all"
                   activeClassName="no-underline bg-blue-900 hover:bg-blue-900 text-white"
                 >
                   <Icon name="toc" size="2xl" />
-                  Tables
+                  Học Kỳ
                 </NavLink>
               </li>
               <li className="rounded-lg mb-2 ">
                 <NavLink
                   exact
-                  to="/tables"
+                  to="/courses"
                   className="flex gap-4 text-sm no-underline text-gray-100 font-light px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-blue-900 hover:text-blue-500 focus:text-white transition-all"
                   activeClassName="no-underline bg-blue-900 hover:bg-blue-900 text-white"
                 >
                   <Icon name="toc" size="2xl" />
-                  Tables
+                  Môn Học
                 </NavLink>
               </li>
               <li className="rounded-lg mb-2 text-gray-700">

@@ -1,1 +1,1 @@
-export const LOCAL_STORAGE_TOKEN_NAME = "locngu";
+export const LOCAL_STORAGE_TOKEN_NAME = "NguyenHuuLoc";

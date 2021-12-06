@@ -61,7 +61,7 @@ function ScienceView() {
               <StatusCard
                 color="pink"
                 icon="trending_up"
-                title="Số lương sinh viên"
+                title="Số lương khoa"
                 amount={sciences.length}
                 percentage="3.48"
                 percentageIcon="arrow_upward"
