@@ -229,6 +229,7 @@ export default function TimeTableScreen() {
               textAlign: "center",
               color: "#99253a",
               fontWeight: "bold",
+              margin:"2rem"
             }}
           >
             Lịch học, lịch thi theo tuần

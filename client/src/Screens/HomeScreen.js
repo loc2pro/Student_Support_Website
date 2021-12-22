@@ -54,19 +54,36 @@ export default function HomeScreen(props) {
         </div>
       </Row>
       <Row>
-        <Col xs={12} sm={12} md={7} lg={7} className="thongtin">
-          <Row style={{ width: "100%" }}>
+        <Col xs={12} sm={12} md={8} lg={8} className="thongtin">
+          <Row
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Col xs={12} sm={12} md={4} lg={4}>
               {userInfo && (
-                  <img class="medium" src={`${path}${userInfo.user?.image}`} alt="avatar" style={{textAlign:"center"}} />
+                <img
+                  class="medium"
+                  src={`${path}${userInfo.user?.image}`}
+                  alt="avatar"
+                />
               )}
             </Col>
             {userInfo ? (
               <>
                 <Col xs={12} sm={12} md={8} lg={8} className="info">
                   <Form>
-                    <Row>
-                      <Col xs={6}>
+                    <Row
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Col xs={12} sm={12} md={6} lg={6}>
                         <Form.Label style={{ fontWeight: "bold" }}>
                           MSSV:
                           <span style={{ margin: "0.2rem" }}>
@@ -74,7 +91,7 @@ export default function HomeScreen(props) {
                           </span>
                         </Form.Label>
                       </Col>
-                      <Col xs={6}>
+                      <Col xs={12} sm={12} md={6} lg={6}>
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Khoa:
                           <span style={{ margin: "0.2rem" }}>
@@ -84,7 +101,7 @@ export default function HomeScreen(props) {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={6}>
+                      <Col xs={12} sm={12} md={6} lg={6}>
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Họ Tên:
                           <span style={{ margin: "0.2rem" }}>
@@ -92,7 +109,7 @@ export default function HomeScreen(props) {
                           </span>
                         </Form.Label>
                       </Col>
-                      <Col xs={6}>
+                      <Col xs={12} sm={12} md={6} lg={6}>
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Ngành:
                           <span style={{ margin: "0.2rem" }}>
@@ -102,7 +119,7 @@ export default function HomeScreen(props) {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={6}>
+                      <Col xs={12} sm={12} md={6} lg={6}>
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Ngày Sinh:
                           <span style={{ margin: "0.2rem" }}>
@@ -110,7 +127,7 @@ export default function HomeScreen(props) {
                           </span>
                         </Form.Label>
                       </Col>
-                      <Col xs={6}>
+                      <Col xs={12} sm={12} md={6} lg={6}>
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Địa Chỉ:
                           <span style={{ margin: "0.2rem" }}>
@@ -123,15 +140,15 @@ export default function HomeScreen(props) {
                 </Col>
               </>
             ) : (
-              <h3>Bạn chưa Login !!!</h3>
+              <h3>IUH-Đại Học Công Nghiệp</h3>
             )}
           </Row>
         </Col>
-        <Col xs={12} sm={12} md={5} lg={5}>
+        <Col xs={12} sm={12} md={4} lg={4}>
           <div class="lichhoc">
             <Row>
               <Col>
-                <Form.Select onChange={handleChange}>
+                <Form.Select onChange={handleChange} style={{marginTop:"1rem"}}>
                   <option value="0">Chọn Học Kỳ</option>
                   {semester?.semessters?.map((val, key) => (
                     <option value={val.id}>{val.tenhocky}</option>

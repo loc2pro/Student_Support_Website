@@ -19,7 +19,7 @@ export default function ForgotPasswordScreen() {
   };
   return (
     <div>
-      <Row>
+      <Row style={{margin:"1rem"}}>
         <Col xs={7}>
           <img src={login} width="90%" />
         </Col>

@@ -1,3 +1,4 @@
+import "antd/dist/antd.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Router, useHistory } from "react-router";
@@ -41,21 +42,27 @@ function App() {
             component={ForgotPasswordScreen}
           ></Route>
           <Route path="/" component={HomeScreen} exact></Route>
-          {/* {userInfo ? (
-            <> */}
-          <Route path="/progresslearn" component={ProgressLearnScreen}></Route>
-          <Route path="/learnresult" component={LearnResultScreen}></Route>
-          <Route path="/profile" component={ProfileScreen}></Route>
-          <Route path="/pay" component={PayScreen}></Route>
-          <Route path="/detb" component={DetbScreen}></Route>
-          <Route path="/timetable" component={TimeTableScreen}></Route>
-          <Route path="/semester" component={SemesterScreen}></Route>
-          <Route path="/semester/:id" component={CoursesScreen}></Route>
-          <Route path="/courses/:id" component={CoursesDetailScreen}></Route>
-          {/* </>
+          {userInfo ? (
+            <>
+              <Route
+                path="/progresslearn"
+                component={ProgressLearnScreen}
+              ></Route>
+              <Route path="/learnresult" component={LearnResultScreen}></Route>
+              <Route path="/profile" component={ProfileScreen}></Route>
+              <Route path="/pay" component={PayScreen}></Route>
+              <Route path="/detb" component={DetbScreen}></Route>
+              <Route path="/timetable" component={TimeTableScreen}></Route>
+              <Route path="/semester" component={SemesterScreen}></Route>
+              <Route path="/semester/:id" component={CoursesScreen}></Route>
+              <Route
+                path="/courses/:id"
+                component={CoursesDetailScreen}
+              ></Route>
+            </>
           ) : (
             <Redirect to="/login" />
-          )} */}
+          )}
 
           <Route path="/login" component={SigninScreen}></Route>
         </Container>

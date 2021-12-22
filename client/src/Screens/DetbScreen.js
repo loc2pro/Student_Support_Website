@@ -5,10 +5,11 @@ import { useHistory } from "react-router";
 import { listDetb } from "../actions/detbActions";
 import { listPlanstudy } from "../actions/planstudyActions";
 import { listTimeTable } from "../actions/timeTableActions copy";
+import Landing from "../Components/layout/Landing";
 import LoadingBox from "../Components/LoadingBox";
 import MessageBox from "../Components/MessageBox";
 
-export default function DetbScreen() {
+export default function DetbScreen(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const userSignin = useSelector((state) => state.userSignin);
@@ -55,7 +56,10 @@ export default function DetbScreen() {
           >
             <Col></Col>
             <Col>
-              <Form.Select onChange={handleChange} style={{marginTop:"3rem"}}>
+              <Form.Select
+                onChange={handleChange}
+                style={{ marginTop: "3rem" }}
+              >
                 <option value="0">Chọn Học Kỳ</option>
                 {semester.semessters.map((val, key) => (
                   <option value={val.id}>{val.tenhocky}</option>

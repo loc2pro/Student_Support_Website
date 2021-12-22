@@ -31,7 +31,7 @@ export default function SigninScreen(props) {
   }, [props.history, redirect, userInfo]);
   return (
     <div>
-      <Row>
+      <Row style={{margin:"1rem"}}>
         <Col xs={7}>
           <img src={login} width="90%" />
         </Col>
@@ -70,13 +70,13 @@ export default function SigninScreen(props) {
                 variant="success"
                 size="lg"
                 type="submit"
-                className="my-3 mx-auto"
+                className="my-2 mx-auto"
               >
                 Login
               </Button>
             </div>
           </Form>
-          <Row style={{ textAlign: "center" }}>
+          <Row style={{ textAlign: "center", margin:"1rem" }}>
             <Link to="/forgotpassword">
               <Button
                 variant="danger"

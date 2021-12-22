@@ -12,10 +12,7 @@
 .home {
   width: 100%;
 }
-.navbar {
-  background-color: turquoise;
-  border: 5rem soild black;
-}
+
 .menu {
   display: flex;
   flex-direction: row;
@@ -125,7 +122,7 @@ header a {
   width: 100%;
   float: left;
   position: relative;
-  margin: 1rem;
+  margin: 0.9rem;
 }
 .min-30 {
   min-width: 30rem;
@@ -142,12 +139,7 @@ header a {
 .col.chart {
   background-color: #f8f8f8;
 }
-.info {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
+
 .login {
   background-color: #a1a1b8;
   border-radius: 1rem;
@@ -177,23 +169,19 @@ img.card-img-top.hinhanh {
 .card-text {
   font-size: 0.8rem;
 }
-img.small {
-  max-width: 5rem;
-  width: 100%;
-}
+
 img.medium {
-  max-width: 8rem;
+  max-width: 6rem;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
+  display: block;
+  margin: 0 auto;
+  margin-top: 0.1rem;
+
 }
 img.large {
   width: 100%;
 }
-.carda {
-}
+
 .carda-header {
   display: flex;
   flex-direction: column;
@@ -383,6 +371,7 @@ div > .title {
   height: 20rem;
   background-color: #f8f8f8;
   border-radius: 0.5rem;
+  width: 100%;
 }
 
 .details {
