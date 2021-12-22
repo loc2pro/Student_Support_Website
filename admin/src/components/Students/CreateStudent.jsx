@@ -31,10 +31,13 @@ export default function CreateStudent({
     dateOfBirth: "",
     address: "",
     MajorId: major.id,
+    PlanStudyId: major.id,
   });
 
   const dispatch = useDispatch();
   const { majors } = useSelector((state) => state.listMajors);
+  const { planstudys } = useSelector((state) => state.listPlanStudys);
+
   const handleCreate = (e) => {
     // e.preventDefault();
     // console.log(studentForm);
@@ -60,6 +63,7 @@ export default function CreateStudent({
     data.append("dateOfBirth", studentForm.dateOfBirth);
     data.append("address", studentForm.address);
     data.append("MajorId", studentForm.MajorId);
+    data.append("PlanStudyId", studentForm.PlanStudyId);
     data.append("image", studentForm.image);
     console.log(studentForm);
     const create = dispatch(createStudent(data));
@@ -84,6 +88,7 @@ export default function CreateStudent({
       dateOfBirth: "",
       address: "",
       MajorId: major.id,
+      PlanStudyId: major.id,
     });
     setShowModal(false);
   };
@@ -93,6 +98,7 @@ export default function CreateStudent({
   };
 
   const [selected, setSelected] = useState(major);
+
   React.useEffect(() => {
     setSelected(major);
   }, [major]);
@@ -101,6 +107,7 @@ export default function CreateStudent({
     setstudentForm({
       ...studentForm,
       MajorId: selected.id,
+      PlanStudyId: selected.id,
     });
   }, [selected]);
   return (

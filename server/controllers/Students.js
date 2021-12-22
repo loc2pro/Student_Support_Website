@@ -290,7 +290,7 @@ const sendEmail = async (req, res) => {
   });
   let newpass = (Math.random() + 1).toString(36).substring(7);
   var mailOptions = {
-    from: "testphongdaotao@iuh.edu.vn",
+    from: "locit2000@gmail.com",
     to: email,
     subject: "Reset Password ",
     html: `<p>Mật khẩu mới của bạn là:${newpass}</p>`,
@@ -354,7 +354,8 @@ const getListStudentsByMajor = async (req, res) => {
 };
 
 const createStudent = async (req, res) => {
-  const { name, khoa, email, dateOfBirth, address, MajorId } = req.body;
+  const { name, khoa, email, dateOfBirth, address, MajorId, PlanStudyId } =
+    req.body;
   console.log(req.body);
   const file = req.file;
   let myFile = req.file.originalname.split(".");
@@ -378,6 +379,7 @@ const createStudent = async (req, res) => {
       dateOfBirth: dateOfBirth,
       address: address,
       MajorId: MajorId,
+      PlanStudyId: PlanStudyId,
     })
       .then(async (newstudent) => {
         let mssv = newstudent.khoa;

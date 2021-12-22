@@ -18,10 +18,9 @@ Post http://localhost:5000/student/create
 Content-Type: application/json
 
 {
-    "mssv": "123456",
-    "name":"ductinh",
-    "email":"ductinh@gmail.com",
-    "password":"123",
+    "mssv": "12345611",
+    "name":"loclocloc",
+    "email":"loc1@gmail.com",
     "dateOfBirth":"12/12/12",
     "address":"Đức Chánh",
     "MajorId":1
