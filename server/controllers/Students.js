@@ -284,13 +284,13 @@ const sendEmail = async (req, res) => {
   var mail = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "locit2000@gmail.com",
-      pass: "0981074090",
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
     },
   });
   let newpass = (Math.random() + 1).toString(36).substring(7);
   var mailOptions = {
-    from: "locit2000@gmail.com",
+    from: process.env.EMAIL,
     to: email,
     subject: "Reset Password ",
     html: `<p>Mật khẩu mới của bạn là:${newpass}</p>`,
