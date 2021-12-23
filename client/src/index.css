@@ -2,7 +2,9 @@
   height: 100%;
   background-color: #e7ecf0;
 }
-
+.App{
+  background-color: #e7ecf0;
+}
 /* layout */
 .container {
   background-color: #e7ecf0;
